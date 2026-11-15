@@ -72,6 +72,7 @@ function extend(i){
  exam.append(feedback,submit);block.append(exam);
  reader.append(block);
 }
+window.academyCourseExtend=extend;
 const moduleButtons=[...list.querySelectorAll(".curriculum-module")];
 moduleButtons.forEach((b,i)=>b.addEventListener("click",()=>queueMicrotask(()=>extend(i))));
 progressPanel();
