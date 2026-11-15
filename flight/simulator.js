@@ -11,7 +11,7 @@ page.innerHTML=`
   <section class="ls-visual" aria-label="Simulated forward cockpit view">
     <div id="ls-world" class="ls-world"><div class="ls-sky"></div><div class="ls-mountains"></div><div class="ls-terrain"><div class="ls-runway"><div></div></div></div></div>
     <div class="ls-window-frame"></div>
-    <div class="ls-training"><span>TRAINING MISSION · 01</span><strong>Hold straight & level</strong><p>Keep pitch near 0°, bank near 0° and indicated speed between 70–120 kt.</p></div>
+    <div class="ls-training"><span>TRAINING MISSION · 01</span><strong>Take off & touch down</strong><p>Increase throttle, reach flying speed, lift off with the yoke, then descend for a runway landing.</p></div>
     <div class="ls-viewstatus"><span id="ls-flight-status">READY</span><span id="ls-clock">00:00</span></div>
   </section>
   <section class="ls-panel" aria-label="Aircraft instrument panel">
@@ -28,15 +28,15 @@ page.innerHTML=`
       <div class="ls-switches"><div class="ls-control-title">FLAPS</div><div id="ls-flap-options" class="ls-flaps"><button data-flaps="0" class="active">0°</button><button data-flaps="10">10°</button><button data-flaps="20">20°</button><button data-flaps="30">30°</button></div><div class="ls-control-title ls-trim-title">TRIM</div><div class="ls-trim"><button id="ls-trim-up" aria-label="Increase trim">▲</button><b id="ls-trim">0</b><button id="ls-trim-down" aria-label="Decrease trim">▼</button></div></div>
     </div>
    </section>
-  <div class="ls-bottom"><span id="ls-guidance">Adjust controls, then start the training scenario.</span><span id="ls-hold">0 / 15 s stable</span><button id="ls-start" class="ls-primary">Start</button><button id="ls-reset" class="ls-secondary">Reset</button></div>
+  <div class="ls-bottom"><span id="ls-guidance">Adjust controls, then start the training scenario.</span><span id="ls-hold">AWAITING TAKEOFF</span><button id="ls-start" class="ls-primary">Start</button><button id="ls-reset" class="ls-secondary">Reset</button></div>
  </div>
  <p class="ls-disclaimer">Concept demonstration only. Illustrative physics and visuals are not certified or suitable for real flight training.</p>
 </div>`;
 const $=id=>page.querySelector("#"+id),clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-const base=()=>({throttle:55,pitch:0,bank:0,flaps:0,trim:0,speed:90,alt:2500,heading:270,vs:0,seconds:0,hold:0,running:false,complete:false});
+const base=()=>({throttle:0,pitch:0,bank:0,flaps:0,trim:0,speed:0,alt:0,heading:180,vs:0,seconds:0,hold:0,running:false,complete:false,phase:"Ready for takeoff",airborne:false,offRunway:false});
 let state=base(),timer=null,draggingYoke=false,draggingThrottle=false;
-function stop(){state.running=false;if(timer){clearInterval(timer);timer=null;}render();}
-function reset(){stop();state=base();render();}
+function stop(){state.running=false;window.flight3d?.setRunning(false);if(timer){clearInterval(timer);timer=null;}render();}
+function reset(){stop();state=base();window.flight3d?.reset();render();}
 function updateYoke(e){const box=$("ls-yoke").getBoundingClientRect();const x=clamp((e.clientX-box.left)/box.width,0,1),y=clamp((e.clientY-box.top)/box.height,0,1);state.bank=Math.round((x-.5)*60);state.pitch=Math.round((.5-y)*20);render();}
 $("ls-yoke").addEventListener("pointerdown",e=>{draggingYoke=true;$("ls-yoke").setPointerCapture(e.pointerId);updateYoke(e);});
 $("ls-yoke").addEventListener("pointermove",e=>{if(draggingYoke)updateYoke(e);});
@@ -51,18 +51,34 @@ $("ls-throttle").addEventListener("keydown",e=>{const delta=e.key==="ArrowUp"||e
 $("ls-flap-options").addEventListener("click",e=>{const b=e.target.closest("button[data-flaps]");if(!b)return;state.flaps=Number(b.dataset.flaps);render();});
 $("ls-trim-up").addEventListener("click",()=>{state.trim=clamp(state.trim+2,-20,20);render();});
 $("ls-trim-down").addEventListener("click",()=>{state.trim=clamp(state.trim-2,-20,20);render();});
-$("ls-start").addEventListener("click",()=>{if(state.complete){reset();return;}if(state.running){stop();return;}state.running=true;timer=setInterval(tick,1000);render();});
+$("ls-start").addEventListener("click",()=>{if(state.complete||state.offRunway){reset();return;}if(state.running){stop();return;}if(!window.flight3d?.ready){$("ls-guidance").textContent="3D environment not ready. Check your connection and reload.";return;}state.running=true;window.flight3d.setRunning(true);timer=setInterval(tick,1000);render();});
 $("ls-reset").addEventListener("click",reset);
-$("ls-brief").addEventListener("click",()=>alert("Straight & level mission: maintain pitch within ±2 degrees, bank within ±5 degrees and indicated speed 70–120 knots for 15 consecutive simulated seconds. Controls are conceptual; this is not a certified flight simulation."));
+$("ls-brief").addEventListener("click",()=>alert("Takeoff and landing demonstration: push throttle forward, accelerate down the runway, pull back on the virtual yoke above approximately 55 knots, then reduce pitch and power to descend and touch down. Simplified educational physics, not real flight procedures."));
 $("ls-exit").addEventListener("click",()=>{stop();const home=document.querySelector("#app .nav button");home?.click();});
 $("ls-dismiss").addEventListener("click",()=>{$("ls-rotate").classList.add("dismissed");});
-function tick(){if(!state.running)return;state.seconds++;const desired=clamp(90+(state.throttle-55)*.75-state.pitch*1.8-state.flaps*.5,35,155);state.speed+=(desired-state.speed)*.2;state.vs=clamp(state.pitch*85+state.trim*.5-state.flaps*2,-1200,1200);state.alt=clamp(state.alt+state.vs/60,0,8000);state.heading=(state.heading+state.bank*.2+360)%360;const good=Math.abs(state.pitch)<=2&&Math.abs(state.bank)<=5&&state.speed>=70&&state.speed<=120;state.hold=good?state.hold+1:0;if(state.hold>=15){state.complete=true;state.running=false;clearInterval(timer);timer=null;}render();}
+function tick(){
+ if(!state.running)return;
+ if(!window.flight3d?.ready){stop();return;}
+ applyTelemetry(window.flight3d.snapshot());
+}
+function applyTelemetry(t){
+ if(!t)return;
+ Object.assign(state,{speed:t.speed,alt:t.alt,vs:t.vs,heading:t.heading,airborne:t.airborne,offRunway:t.offRunway,phase:t.phase,seconds:Math.floor(t.elapsed)});
+ if(t.landed){state.complete=true;stop();}
+ else if(t.offRunway){stop();}
+ else render();
+}
+window.flightTrainer={
+ ready(){window.flight3d?.setControls(state);render();},
+ telemetry(t){applyTelemetry(t);},
+ failed(msg){$("ls-guidance").textContent=msg;$("ls-start").disabled=true;}
+};
 function render(){const s=state;
  $("ls-speed").textContent=Math.round(s.speed);$("ls-alt").textContent=Math.round(s.alt).toLocaleString("en-US");$("ls-heading").textContent=Math.round(s.heading)+"°";$("ls-vs").textContent=Math.round(s.vs);
  $("ls-pitch").textContent=s.pitch+"°";$("ls-bank").textContent=s.bank+"°";$("ls-trim").textContent=s.trim;$("ls-throttle-text").textContent=s.throttle;
  $("ls-throttle").setAttribute("aria-valuenow",String(s.throttle));$("ls-throttle").setAttribute("aria-valuetext",s.throttle+" percent");
  $("ls-yoke-knob").style.left=(50+s.bank/30*37)+"%";$("ls-yoke-knob").style.top=(50-s.pitch/10*37)+"%";$("ls-throttle-handle").style.bottom="calc("+s.throttle+"% * .68 + 11%)";
- $("ls-world").style.transform="translateY("+(s.pitch*2.3)+"px) rotate("+(-s.bank)+"deg) scale(1.4)";
+ if(!window.flight3d?.ready)$("ls-world").style.transform="none";window.flight3d?.setControls(s);
  $("ls-attitude-scene").style.transform="translateY("+(s.pitch*1.5)+"px) rotate("+(-s.bank)+"deg) scale(1.7)";
  $("ls-speed-needle").style.transform="translateX(-50%) rotate("+(-115+clamp(s.speed/160,0,1)*230)+"deg)";
  $("ls-alt-needle").style.transform="translateX(-50%) rotate("+((s.alt%1000)/1000*360-135)+"deg)";
@@ -70,9 +86,9 @@ function render(){const s=state;
  $("ls-compass").style.transform="translate(-50%,-50%) rotate("+(-s.heading)+"deg)";
  for(const b of $("ls-flap-options").querySelectorAll("button")){b.classList.toggle("active",Number(b.dataset.flaps)===s.flaps);b.setAttribute("aria-pressed",String(Number(b.dataset.flaps)===s.flaps));}
  $("ls-clock").textContent=String(Math.floor(s.seconds/60)).padStart(2,"0")+":"+String(s.seconds%60).padStart(2,"0");
- $("ls-flight-status").textContent=s.complete?"OBJECTIVE COMPLETE":s.running?"SIM ACTIVE":s.seconds?"PAUSED":"READY";
- $("ls-hold").textContent=s.hold+" / 15 s stable";$("ls-start").textContent=s.complete?"Try Again":s.running?"Pause":s.seconds?"Resume":"Start";
- $("ls-guidance").textContent=s.complete?"Objective achieved — completed 15 seconds of stable flight.":!s.running?"Adjust controls, then start the training scenario.":Math.abs(s.pitch)>2||Math.abs(s.bank)>5?"Center pitch and bank to stabilize the aircraft.":s.speed<70||s.speed>120?"Adjust throttle to bring indicated airspeed into range.":"Maintain steady attitude and power.";
+ $("ls-flight-status").textContent=s.complete?"LANDED":s.offRunway?"RESTART REQUIRED":s.running?"SIM ACTIVE":s.seconds?"PAUSED":"READY";
+ $("ls-hold").textContent=s.phase.toUpperCase();$("ls-start").textContent=s.complete||s.offRunway?"Try Again":s.running?"Pause":s.seconds?"Resume":"Start";
+ $("ls-guidance").textContent=s.complete?"Successful runway touchdown! Reset to try again.":s.offRunway?"You left the runway area. Reset the scenario.":!s.running?"Set throttle to idle, press Start, then increase power for takeoff.":s.airborne?"Airborne: adjust pitch, bank, and power to approach the runway.":s.speed<50?"Accelerating: keep aligned with the runway and build airspeed.":"Apply gentle nose-up yoke input when ready to lift off.";
 }
 const focus=()=>{const active=page.classList.contains("active");document.body.classList.toggle("flight-sim-focus",active);if(!active&&state.running)stop();};
 new MutationObserver(focus).observe(page,{attributes:true,attributeFilter:["class"]});
