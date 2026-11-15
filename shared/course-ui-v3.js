@@ -25,8 +25,8 @@ function progressPanel(){
  progress.append(panel);
 }
 function extend(i){
- if(i<0||i>=courses.length||reader.hidden||reader.dataset.courseExtension===String(i))return;
- reader.dataset.courseExtension=String(i);
+ if(i<0||i>=courses.length||reader.hidden||reader.querySelector(".curriculum-course-v3"))return;
+
  const subjects=courses[i];
  const block=el("section","curriculum-course-v3");
  block.append(el("h2","curriculum-deep-title","Additional course lessons"));
