@@ -13,10 +13,41 @@ let active=0;
 function update(){counter.textContent=completed.length+" / "+units.length+" lessons completed";fill.style.width=completed.length/units.length*100+"%";list.querySelectorAll("button").forEach((b,i)=>{b.querySelector(".curriculum-state").textContent=completed.includes(i)?"Completed":"Open lesson";b.classList.toggle("complete",completed.includes(i))});const home=app.querySelector(".progress-card .meterbox");if(home){const pct=Math.round(completed.length/units.length*100);const val=home.querySelector(".line b");if(val)val.textContent=pct+"%";const meter=home.querySelector(".meter i");if(meter)meter.style.width=pct+"%";}}
 function openLesson(i){active=i;const u=units[i];reader.replaceChildren();const back=el("button","curriculum-back","← All lessons");back.onclick=()=>{reader.hidden=true;list.hidden=false;list.scrollIntoView({block:"start"});};reader.append(back,el("div","eyebrow","FOUNDATIONAL LESSON "+String(i+1).padStart(2,"0")),el("h2","",u[0]));
 for(const [heading,p] of [["Core concepts",u[1]],["How it works",u[2]],["Worked reasoning exercise",u[3]]]){reader.append(el("h3","",heading),el("p","",p));}
+const extra=window.academyDeepChapters?.[academy]?.[i];
+if(extra){
+ reader.append(el("h2","curriculum-deep-title","Expanded chapter: "+extra.title));
+ extra.study.forEach((paragraph,n)=>{reader.append(el("h3","",["Theory and principles","Mechanisms and tradeoffs","Research and practical interpretation"][n]||"Further study"),el("p","",paragraph));});
+ reader.append(el("h3","","Applied case study"),el("p","",extra.scenario));
+ reader.append(el("h3","","Written portfolio assignment"),el("p","",extra.task));
+ const rubric=el("ul","curriculum-rubric");extra.criteria.forEach(x=>rubric.append(el("li","",x)));reader.append(el("h3","","Review criteria"),rubric);
+ const assignmentKey="academy-writing-v2-"+academy+"-"+i;
+ const draft=el("textarea","curriculum-draft");draft.rows=7;draft.setAttribute("aria-label","Written assignment response");draft.placeholder="Write your analysis, assumptions, alternative interpretations, and conclusion here…";
+ try{draft.value=localStorage.getItem(assignmentKey)||""}catch(_){}
+ draft.addEventListener("input",()=>{try{localStorage.setItem(assignmentKey,draft.value)}catch(_){}});
+ reader.append(draft,el("p","curriculum-note","Draft saved to this browser when storage is available. Responses are not graded by a human or AI."));
+ const q=extra.quiz;reader.append(el("h3","","Chapter mastery question"),el("p","",q[0]));
+ const questionChoices=el("div","curriculum-options"),result=el("div","curriculum-feedback");result.hidden=true;
+ const submit=el("button","curriculum-done","Record chapter practice");submit.disabled=true;
+ let passed=false;
+ q[1].forEach((ans,j)=>{const option=el("button","curriculum-option",String.fromCharCode(65+j)+". "+ans);option.onclick=()=>{passed=j===q[2];questionChoices.querySelectorAll("button").forEach(b=>b.classList.remove("selected"));option.classList.add("selected");result.hidden=false;result.textContent=(passed?"Correct. ":"Not yet. ")+q[3];submit.disabled=!passed;};questionChoices.append(option);});
+ reader.append(questionChoices,result,submit);
+ submit.onclick=()=>{if(!passed)return;if(draft.value.trim().length<80){result.hidden=false;result.textContent="Please write at least 80 characters explaining your case analysis before recording practice.";return;}
+ const progressKey="academy-chapter-practice-v2-"+academy;
+ try{const x=JSON.parse(localStorage.getItem(progressKey)||"[]");const set=new Set(Array.isArray(x)?x:[]);set.add(i);localStorage.setItem(progressKey,JSON.stringify([...set]));submit.textContent="Practice recorded ✓";submit.disabled=true;renderProgress();}
+ catch(_){result.hidden=false;result.textContent="Answer correct, but this browser could not save the completion. Your written response may still be available.";return;}
+ result.hidden=false;result.textContent="Chapter practice recorded on this device. Your writing is saved but not independently graded.";
+ };
+}
+
 reader.append(el("h3","","Knowledge check"),el("p","",u[4]));const options=el("div","curriculum-options"),feedback=el("div","curriculum-feedback");feedback.hidden=true;let correct=false;
 u[5].forEach((answer,j)=>{const b=el("button","curriculum-option",String.fromCharCode(65+j)+". "+answer);b.onclick=()=>{correct=j===u[6];options.querySelectorAll("button").forEach(t=>t.classList.remove("selected"));b.classList.add("selected");feedback.hidden=false;feedback.textContent=(correct?"Correct. ":"Review the concept and try again. ")+u[7];done.disabled=!correct;};options.append(b)});
 reader.append(options,feedback);const done=el("button","curriculum-done",completed.includes(i)?"Completed ✓":"Complete lesson");done.disabled=!completed.includes(i);done.onclick=()=>{if(!completed.includes(i)){completed.push(i);try{localStorage.setItem(KEY,JSON.stringify(completed))}catch(_){feedback.textContent="Your answer was correct, but this browser did not allow local progress storage.";feedback.hidden=false;}update();}done.textContent="Completed ✓";done.disabled=true;renderProgress();};reader.append(done,el("p","curriculum-note","This is an introductory lesson, not professional qualification or substitute for supervised practical training."));list.hidden=true;reader.hidden=false;reader.scrollIntoView({block:"start"});}
 units.forEach((u,i)=>{const b=el("button","curriculum-module");const order=el("span","curriculum-order",String(i+1).padStart(2,"0")),main=el("span","curriculum-module-text");main.append(el("strong","",u[0]),el("small","",academy==="flight"?"Aviation fundamentals":academy==="survival"?"Preparedness fundamentals":"Space science fundamentals"));const st=el("span","curriculum-state");b.append(order,main,st);b.onclick=()=>openLesson(i);list.append(b)});
-function renderProgress(){const existing=progressPage.querySelector("#learning-progress-register");if(existing)existing.remove();const panel=el("section","learning-register");panel.id="learning-progress-register";panel.append(el("h2","","Learning progress"),el("p","",completed.length+" of "+units.length+" foundational lessons completed on this device."));units.forEach((u,i)=>panel.append(el("div","learning-progress-row",(completed.includes(i)?"✓ ":"○ ")+u[0])));progressPage.append(panel)}
+function renderProgress(){const existing=progressPage.querySelector("#learning-progress-register");if(existing)existing.remove();const panel=el("section","learning-register");panel.id="learning-progress-register";panel.append(el("h2","","Learning progress"),el("p","",completed.length+" of "+units.length+" foundational lessons completed on this device."));units.forEach((u,i)=>panel.append(el("div","learning-progress-row",(completed.includes(i)?"✓ ":"○ ")+u[0])));progressPage.append(panel);
+const oldExtra=progressPage.querySelector("#academy-chapter-practice");if(oldExtra)oldExtra.remove();
+let advanced=[];try{const a=JSON.parse(localStorage.getItem("academy-chapter-practice-v2-"+academy)||"[]");advanced=Array.isArray(a)?a:[]}catch(_){}
+const more=el("section","learning-register");more.id="academy-chapter-practice";more.append(el("h2","","Expanded chapter practice"),el("p","",advanced.length+" of "+units.length+" chapter practice assignments recorded locally. Written work is not independently graded."));
+units.forEach((u,i)=>more.append(el("div","learning-progress-row",(advanced.includes(i)?"✓ ":"○ ")+u[0])));progressPage.append(more);
+}
 update();renderProgress();
 })();
