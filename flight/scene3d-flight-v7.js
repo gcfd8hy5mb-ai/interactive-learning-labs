@@ -83,7 +83,7 @@ function advance(dt){
      p.phase=p.speed>2?"Landing rollout — use BRAKE":"Stopped on runway";
      if(p.speed<=2){
        p.landed=true;
-       p.score=Math.round(clamp(100-Math.abs(p.touchdownCrossTrack)*2.2-Math.max(0,Math.abs(p.touchdownVSpeed)-1.1)*13-Math.abs(p.touchdownSpeed-34)*.7,0,100));
+       p.score=Math.round(clamp(100-Math.abs(p.touchdownCrossTrack)*2.2-Math.max(0,Math.abs(p.touchdownVSpeed)-200)*.08-Math.abs(p.touchdownSpeed-65)*.5,0,100));
        p.phase="Landing complete — "+p.score+"/100";
      }
    }else p.phase=p.speed<1?"Ready for takeoff":p.speed<27?"Takeoff roll":"Rotation speed reached";
