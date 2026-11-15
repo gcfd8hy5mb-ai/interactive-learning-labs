@@ -5,29 +5,31 @@ page.classList.add("flight-simulator-page");
 page.replaceChildren();
 page.innerHTML=`
 <div class="flight-console">
-  <div class="fs-topline"><div><span class="fs-kicker">FLIGHT OPERATIONS / TRAINING LAB</span><h1>Flight Simulator</h1><p>Single-engine trainer · simplified instrument familiarization</p></div><span class="fs-status" id="fs-state">SIMULATION READY</span></div>
-  <div class="fs-bar"><span>SCENARIO <b>01 / STRAIGHT & LEVEL</b></span><span>MODE <b>TRAINING</b></span><button id="fs-brief" class="fs-mini">Briefing</button></div>
+  <div class="fs-topline"><button id="fs-exit" class="fs-exit" aria-label="Exit simulator">‹ Academy</button><div class="fs-topline-title"><span class="fs-kicker">FLIGHT TRAINING / SCENARIO 01</span><h1>Single-Engine Flight Trainer</h1></div><span class="fs-status" id="fs-state">READY</span></div>
+  <div class="fs-bar"><span>SCENARIO <b>STRAIGHT & LEVEL</b></span><span>TRAINING MODE <b>CONCEPT DEMO</b></span><button id="fs-brief" class="fs-mini">Briefing</button></div>
   <div class="fs-viewport">
-    <div class="fs-world" id="fs-world"><div class="fs-sky"></div><div class="fs-ground"></div><div class="fs-horizon"></div></div>
-    <div class="fs-reticle">+</div><div class="fs-view-label">FORWARD VIEW · DEMONSTRATION</div>
+    <div class="fs-world" id="fs-world"><div class="fs-sky"></div><div class="fs-ground"><div class="fs-runway"><div class="fs-centerline"></div></div></div><div class="fs-horizon"></div></div><div class="fs-windshield"><i></i><i></i></div><div class="fs-dash-shadow"></div>
+    <div class="fs-reticle"><span>┄┄</span>＋<span>┄┄</span></div><div class="fs-view-label">FORWARD VIEW · DEMONSTRATION</div>
     <div class="fs-view-bottom"><span id="fs-view-text">Level attitude · moderate power</span><span id="fs-pause-state">READY</span></div>
   </div>
-  <div class="fs-gauges">
-    <div class="fs-gauge"><span>AIRSPEED</span><strong id="fs-speed">90</strong><small>KNOTS · INDICATED</small><div class="fs-bar-meter"><i id="fs-speedmeter"></i></div></div>
-    <div class="fs-gauge"><span>ALTITUDE</span><strong id="fs-alt">2,500</strong><small>FEET · INDICATED</small><div class="fs-bar-meter"><i id="fs-altmeter"></i></div></div>
-    <div class="fs-gauge"><span>HEADING</span><strong id="fs-heading">270°</strong><small>DEGREES</small><div class="fs-bar-meter"><i id="fs-headingmeter"></i></div></div>
-    <div class="fs-gauge"><span>VERTICAL SPEED</span><strong id="fs-vs">0</strong><small>FT/MIN</small><div class="fs-bar-meter"><i id="fs-vsmeter"></i></div></div>
+  <div class="fs-instrument-panel">
+    <div class="fs-instrument"><span class="fs-dial-title">AIRSPEED</span><div class="fs-dial fs-airspeed"><i id="fs-speed-needle" class="fs-needle"></i><b id="fs-speed">90</b><small>KTS</small></div></div>
+    <div class="fs-instrument"><span class="fs-dial-title">ATTITUDE</span><div class="fs-dial fs-attitude"><div id="fs-attitude-scene" class="fs-attitude-scene"><div class="fs-attitude-sky"></div><div class="fs-attitude-ground"></div></div><div class="fs-attitude-wings">━ ◆ ━</div></div></div>
+    <div class="fs-instrument"><span class="fs-dial-title">ALTITUDE</span><div class="fs-dial fs-altitude"><i id="fs-alt-needle" class="fs-needle"></i><b id="fs-alt">2,500</b><small>FT</small></div></div>
+    <div class="fs-instrument"><span class="fs-dial-title">HEADING</span><div class="fs-dial fs-heading"><div id="fs-compass" class="fs-compass-ring">N · E · S · W</div><b id="fs-heading">270°</b><small>HDG</small></div></div>
   </div>
+  <div class="fs-secondary-readouts"><span>VERTICAL SPEED <b id="fs-vs">0</b> FT/MIN</span><span>THROTTLE <b id="fs-quick-throttle">55</b>%</span><span>FLAPS <b id="fs-quick-flaps">0</b>°</span></div>
+  <div class="fs-primary-actions"><button id="fs-start" class="fs-action-primary">Start Simulation</button><button id="fs-reset">Reset</button></div>
   <div class="fs-grid">
-    <section class="fs-panel"><header><b>FLIGHT CONTROLS</b><small>MANUAL INPUT</small></header>
+    <section class="fs-panel"><header><b>FLIGHT CONTROLS</b><small>LIVE INPUT</small></header>
       <div class="fs-control"><label for="fs-throttle">Throttle <output id="fs-throttle-n">55%</output></label><input id="fs-throttle" type="range" min="0" max="100" value="55"></div>
       <div class="fs-control"><label for="fs-pitch">Pitch <output id="fs-pitch-n">0°</output></label><input id="fs-pitch" type="range" min="-12" max="12" value="0"></div>
       <div class="fs-control"><label for="fs-bank">Bank angle <output id="fs-bank-n">0°</output></label><input id="fs-bank" type="range" min="-35" max="35" value="0"></div>
       <div class="fs-control"><label for="fs-flaps">Flaps <output id="fs-flaps-n">0°</output></label><input id="fs-flaps" type="range" min="0" max="30" step="10" value="0"></div>
       <div class="fs-control"><label for="fs-trim">Elevator trim <output id="fs-trim-n">0%</output></label><input id="fs-trim" type="range" min="-20" max="20" value="0"></div>
-      <div class="fs-actions"><button id="fs-start" class="fs-action-primary">Start Simulation</button><button id="fs-reset">Reset</button></div>
+      
     </section>
-    <section class="fs-panel"><header><b>TRAINING GUIDANCE</b><small>OBJECTIVE 01</small></header>
+    <section class="fs-panel fs-training-panel"><header><b>TRAINING GUIDANCE</b><small>OBJECTIVE 01</small></header>
       <div class="fs-objective">Maintain a stable, nearly level flight attitude for 15 simulated seconds.</div>
       <p class="fs-guidance" id="fs-guidance" aria-live="polite">Use the controls to explore how a conceptual trainer responds. Start the scenario when ready.</p>
       <div class="fs-data"><span>ELAPSED SIM TIME</span><strong id="fs-time">00:00</strong></div>
@@ -48,16 +50,18 @@ function render(){
   $("fs-alt").textContent=Math.round(s.alt).toLocaleString("en-US");
   $("fs-heading").textContent=Math.round(s.heading)+"°";
   $("fs-vs").textContent=Math.round(s.vs);
-  $("fs-speedmeter").style.width=clamp(s.speed/150*100,0,100)+"%";
-  $("fs-altmeter").style.width=clamp(s.alt/5000*100,0,100)+"%";
-  $("fs-headingmeter").style.width=clamp(s.heading/360*100,0,100)+"%";
-  $("fs-vsmeter").style.width=clamp((s.vs+1000)/2000*100,0,100)+"%";
-  $("fs-world").style.transform="translateY("+(s.pitch*1.7)+"px) rotate("+(-s.bank)+"deg) scale(1.35)";
+  $("fs-speed-needle").style.transform="translateX(-50%) rotate("+(-120+clamp(s.speed/160,0,1)*240)+"deg)";
+  $("fs-alt-needle").style.transform="translateX(-50%) rotate("+((s.alt%1000)/1000*360-135)+"deg)";
+  $("fs-compass").style.transform="translate(-50%,-50%) rotate("+(-s.heading)+"deg)";
+  $("fs-attitude-scene").style.transform="translateY("+(s.pitch*1.5)+"px) rotate("+(-s.bank)+"deg) scale(1.7)";
+  $("fs-quick-throttle").textContent=s.throttle;
+  $("fs-quick-flaps").textContent=s.flaps;
+  $("fs-world").style.transform="translateY("+(s.pitch*2.4)+"px) rotate("+(-s.bank)+"deg) scale(1.45)";
   $("fs-time").textContent=String(Math.floor(s.seconds/60)).padStart(2,"0")+":"+String(s.seconds%60).padStart(2,"0");
   $("fs-hold").textContent=s.hold+" / 15 s";
-  $("fs-state").textContent=s.complete?"OBJECTIVE COMPLETE":s.running?"SIMULATION ACTIVE":"SIMULATION PAUSED";
+  $("fs-state").textContent=s.complete?"COMPLETE":s.running?"ACTIVE":s.seconds>0?"PAUSED":"READY";
   $("fs-pause-state").textContent=s.running?"RUNNING":s.complete?"COMPLETED":"PAUSED";
-  $("fs-start").textContent=s.running?"Pause Simulation":s.seconds>0?"Resume Simulation":"Start Simulation";
+  $("fs-start").textContent=s.running?"Pause":s.seconds>0?"Resume":"Start Simulation";
   $("fs-objective-status").textContent=s.complete?"COMPLETE":s.running?"IN PROGRESS":"NOT STARTED";
   const stable=Math.abs(s.pitch)<=2&&Math.abs(s.bank)<=5&&s.speed>=70&&s.speed<=120;
   $("fs-view-text").textContent=stable?"Stable attitude · monitor instruments":Math.abs(s.bank)>5?"Bank angle outside training target":Math.abs(s.pitch)>2?"Adjust pitch toward level":"Check indicated airspeed";
@@ -79,6 +83,10 @@ $("fs-start").addEventListener("click",()=>{if(s.complete)return;if(s.running){s
 $("fs-reset").addEventListener("click",()=>{stop();s=initial();for(const id of ["throttle","pitch","bank","flaps","trim"])$("fs-"+id).value=s[id];render();});
 for(const id of ["throttle","pitch","bank","flaps","trim"])$("fs-"+id).addEventListener("input",()=>{readInputs();render();});
 $("fs-brief").addEventListener("click",()=>{alert("MISSION BRIEFING — STRAIGHT AND LEVEL\\n\\nAdjust the conceptual throttle, pitch and bank controls. Hold pitch within ±2°, bank within ±5°, and indicated airspeed within 70–120 knots for 15 consecutive simulated seconds.\\n\\nThis is an educational demonstration, not a pilot certification or real-world flight model.");});
+const syncFocus=()=>{document.body.classList.toggle("flight-sim-focus",page.classList.contains("active"));if(!page.classList.contains("active")&&s.running)stop();};
+new MutationObserver(syncFocus).observe(page,{attributes:true,attributeFilter:["class"]});
+$("fs-exit").addEventListener("click",()=>{stop();const home=document.querySelector("#app .nav button");if(home)home.click();});
 document.addEventListener("visibilitychange",()=>{if(document.hidden&&s.running)stop();});
+syncFocus();
 render();
 })();
