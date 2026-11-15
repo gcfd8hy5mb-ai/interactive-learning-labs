@@ -26,15 +26,19 @@ function attach(i){
  bank.id="academy-question-bank-"+document.body.dataset.academy+"-"+i;
  bank.append(el("h2","","Questions & assessments"),el("p","academy-questions-note","All questions and practice assessments for this course are collected here. You can read the chapters without opening this tab."));
  const add=(item)=>{if(item)bank.append(item)};
- // The original foundational and deep-chapter assessment nodes retain their handlers.
- const basic=promoteQuestion(reader,"Foundational lesson · Knowledge check","Knowledge check",null);
- // This range includes the completion button and endnote.
- add(basic);
- const mastery=promoteQuestion(reader,"Expanded chapter · Mastery question","Chapter mastery question","Knowledge check");
- add(mastery);
- // Move the optional written portfolio exercise and saved draft beside its mastery check.
+ // Extract the written portfolio before moving the adjacent mastery question.
  const written=promoteQuestion(reader,"Expanded chapter · Written portfolio","Written portfolio assignment","Chapter mastery question");
  add(written);
+ const mastery=promoteQuestion(reader,"Expanded chapter · Mastery question","Chapter mastery question","Knowledge check");
+ add(mastery);
+ // The original foundational knowledge check consists of five adjacent nodes.
+ const knowledge=[...reader.children].find(n=>heading(n,"Knowledge check"));
+ if(knowledge){
+  const nodes=[...reader.children],index=nodes.indexOf(knowledge),block=el("section","academy-questions-item");
+  block.append(el("h3","","Foundational lesson · Knowledge check"));
+  for(const node of nodes.slice(index,index+5))block.append(node);
+  add(block);
+ }
  // Three-question module exam: leave explanatory sublessons in the reading tab.
  const exam=reader.querySelector(".curriculum-course-v3 > .curriculum-exam");
  if(exam){const wrapper=el("section","academy-questions-item");wrapper.append(el("h3","","Module examination"),exam);add(wrapper);}
