@@ -31,3 +31,12 @@
 .survival .curriculum-module,.survival .curriculum-reader,.survival .learning-register{background:linear-gradient(135deg,#172b23,#0c1917)}
 .space .curriculum-module,.space .curriculum-reader,.space .learning-register{background:linear-gradient(135deg,#1b2340,#0d1423)}
 @media(min-width:760px){.curriculum-list{grid-template-columns:1fr 1fr}.curriculum-reader{padding:30px}.curriculum-reader p{font-size:15px}}
+
+
+/* Deep chapter, workbook and mastery assessment */
+.curriculum-deep-title{margin:29px 0 14px!important;padding-top:20px;border-top:1px solid var(--edge);color:var(--accent);font-size:21px!important}
+.curriculum-rubric{margin:0 0 17px;padding-left:22px;color:#ccd9e4;font-size:13px;line-height:1.7}
+.curriculum-rubric li{padding:2px 0}
+.curriculum-draft{display:block;width:100%;resize:vertical;min-height:145px;margin:14px 0;border:1px solid var(--edge);border-radius:8px;padding:13px;background:#0b1828;color:#eaf4fa;font:13px/1.6 inherit;box-sizing:border-box}
+.curriculum-draft:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.curriculum-reader .curriculum-deep-title+h3{margin-top:19px}
