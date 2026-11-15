@@ -31,7 +31,7 @@ box("parallel taxiway",15,.05,1600,110,-.003,20,pavement);
 for(let z=-835;z<=840;z+=65)box("centerline "+z,1.5,.015,29,0,.05,z,white);
 for(let z of [-810,810])for(let i=-2;i<=2;i++){box("threshold "+z+" "+i,2.3,.016,28,i*5,.055,z,white);}
 for(let z=-870;z<=870;z+=65){for(const side of [-1,1]){box("edge light "+z+side,.65,.45,.65,side*23.5,.27,z,lightmat);}}
-for(let i=0;i<70;i++){const z=-1100+i*48,x=100+((i*127)%250);for(const sign of [-1,1]){const tx=sign*x;const stem=B.MeshBuilder.CreateCylinder("tree trunk",{diameter:1.4,height:6,tessellation:5},scene);stem.position.set(tx,3,z);stem.material=trunk;const cone=B.MeshBuilder.CreateCylinder("fir",{diameterTop:0,diameterBottom:9+(i%4),height:17+(i%6)*2,tessellation:5},scene);cone.position.set(tx,13,z);cone.material=i%3?pine:pine2;}}
+for(let i=0;i<36;i++){const z=-1100+i*86,x=100+((i*127)%250);for(const sign of [-1,1]){const tx=sign*x;const stem=B.MeshBuilder.CreateCylinder("tree trunk",{diameter:1.4,height:6,tessellation:5},scene);stem.position.set(tx,3,z);stem.material=trunk;const cone=B.MeshBuilder.CreateCylinder("fir",{diameterTop:0,diameterBottom:9+(i%4),height:17+(i%6)*2,tessellation:5},scene);cone.position.set(tx,13,z);cone.material=i%3?pine:pine2;}}
 for(let i=0;i<8;i++){const x=190+(i%3)*48,z=380+Math.floor(i/3)*90;box("hangar "+i,36,16,42,x,8,z,hanger);box("roof "+i,40,3,46,x,17,z,roof);}
 box("tower",13,43,13,280,21,500,hanger);box("tower cab",22,9,22,280,46,500,roof);
 for(let z=-1200;z<=1200;z+=100){box("far fence left "+z,1,1,12,-310,.4,z,roof);box("far fence right "+z,1,1,12,310,.4,z,roof);}
