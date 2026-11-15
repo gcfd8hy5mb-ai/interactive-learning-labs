@@ -187,3 +187,17 @@ body.flight-sim-focus{background:#070d15}
 .ls-training{padding:6px}.ls-training p{display:none}
 }
 @media(prefers-reduced-motion:reduce){.ls-world,.ls-attitude-scene{transition:none}}
+
+
+/* 3D runway world integration, prototype v4 */
+.ls-world.ls-3d-host{inset:0!important;transform:none!important;transition:none;overflow:hidden}
+.ls-world.ls-3d-host canvas{width:100%;height:100%;display:block;touch-action:none;outline:none}
+.ls-visual:has(.ls-3d-host){background:#6587a0}
+.ls-visual:has(.ls-3d-host) .ls-window-frame{pointer-events:none}
+.ls-viewstatus{z-index:2}
+.ls-training{z-index:2;backdrop-filter:blur(3px)}
+.ls-bottom button:disabled{opacity:.48;cursor:not-allowed}
+@media (orientation:landscape) and (max-height:530px){
+.ls-visual:has(.ls-3d-host){height:clamp(135px,39dvh,215px)}
+.ls-training{max-width:260px}
+}
