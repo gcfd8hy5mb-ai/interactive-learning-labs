@@ -1,0 +1,48 @@
+/* Flight Academy cockpit simulator — iPhone-first technical interface */
+.flight-simulator-page{color:#eaf2f7}.flight-simulator-page .flight-console{max-width:1040px;margin:0 auto}
+.fs-topline{display:flex;align-items:start;justify-content:space-between;gap:9px;margin:2px 0 15px}
+.fs-topline h1{font-size:25px;letter-spacing:-.04em;margin:6px 0}
+.fs-topline p{font-size:11px;color:#a8bacb;line-height:1.4;margin:0}
+.fs-kicker{font-size:9px;color:#8ec9e2;font-weight:800;letter-spacing:.14em}
+.fs-status{color:#8ec9e2;flex-shrink:0;font-size:9px;font-weight:800;border:1px solid rgba(114,175,204,.3);border-radius:4px;padding:7px;margin-top:5px}
+.fs-bar{display:flex;align-items:center;justify-content:space-between;gap:7px;flex-wrap:wrap;background:#0b1723;border:1px solid rgba(123,153,179,.22);padding:9px 10px;border-radius:6px;margin-bottom:10px}
+.fs-bar span{display:flex;flex-direction:column;color:#8196a9;font-size:8px;gap:3px;letter-spacing:.07em}
+.fs-bar b{font-size:10px;color:#e9f3fa;letter-spacing:0}
+.fs-mini{background:#17283a;color:#d4e7f2;border:1px solid #34475b;border-radius:4px;padding:9px 12px;font-weight:650;font-size:11px}
+.fs-viewport{height:225px;position:relative;overflow:hidden;border-radius:8px;border:1px solid #3b546b;background:linear-gradient(#3c6981 0%,#91b5c3 52%,#54624d 53%,#273b2d 100%);box-shadow:inset 0 0 40px #081421}
+.fs-world{position:absolute;inset:-40%;transform-origin:50% 50%;transition:transform .2s ease-out;will-change:transform}
+.fs-sky{position:absolute;inset:0 0 48%;background:linear-gradient(#315f7f,#a0b9c3)}
+.fs-ground{position:absolute;inset:52% 0 0;background:linear-gradient(#747762,#465b47 45%,#263e32)}
+.fs-horizon{position:absolute;top:52%;left:0;right:0;height:2px;background:#f5d7a9}
+.fs-reticle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:30px ui-monospace,SFMono-Regular,monospace;color:#ffe2a1;text-shadow:0 0 3px #000}
+.fs-view-label{position:absolute;top:10px;left:10px;color:#f1f8fb;background:rgba(4,15,25,.72);padding:7px 8px;font-size:9px;font-weight:750;letter-spacing:.1em;border-radius:3px}
+.fs-view-bottom{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;gap:10px;padding:12px;background:linear-gradient(transparent,rgba(4,12,18,.88));font-size:10px}
+.fs-view-bottom span:last-child{color:#d7b46b;font-weight:800}
+.fs-gauges{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}
+.fs-gauge{background:linear-gradient(140deg,#12263a,#0a1724);padding:12px 11px;border:1px solid #33475b;border-radius:7px;min-width:0}
+.fs-gauge>span{font-size:9px;font-weight:800;letter-spacing:.1em;color:#a6b8c6}
+.fs-gauge strong{display:block;font:700 28px ui-monospace,SFMono-Regular,Consolas,monospace;color:#eef9fc;margin:5px 0 2px;letter-spacing:-.04em}
+.fs-gauge small{font-size:8px;letter-spacing:.09em;color:#98b0c4}
+.fs-bar-meter{height:3px;background:#29394a;margin-top:10px;overflow:hidden}
+.fs-bar-meter i{height:100%;width:0;display:block;background:#79c6ec;transition:width .2s}
+.fs-grid{display:grid;gap:10px}
+.fs-panel{border:1px solid #354759;background:#0c1826;border-radius:8px;padding:14px}
+.fs-panel header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #273748;padding-bottom:11px;margin-bottom:14px;gap:9px}
+.fs-panel header b{font-size:12px;letter-spacing:.09em}
+.fs-panel header small{font-size:9px;color:#80b8d6}
+.fs-control{margin-bottom:17px}
+.fs-control label{display:flex;justify-content:space-between;color:#d4e2ee;font-size:12px;font-weight:600;margin-bottom:7px}
+.fs-control output{font-family:ui-monospace,monospace;font-size:12px;color:#8bd4f1}
+.fs-control input{display:block;accent-color:#8ccce8;width:100%;margin:0;height:20px}
+.fs-actions{display:flex;gap:9px}
+.fs-actions button{border:1px solid #3b5267;border-radius:5px;color:#e9f0f7;background:#1a2a3d;font-size:11px;font-weight:800;padding:12px 9px;flex:1}
+.fs-actions button.fs-action-primary{background:#d4a75f;border-color:#d4a75f;color:#101823;flex:2}
+.fs-objective{padding:13px;border-left:3px solid #c4a161;background:#142435;color:#e9f2f8;font-size:13px;line-height:1.45}
+.fs-guidance{font-size:12px;line-height:1.55;color:#b8cbd9;min-height:58px}
+.fs-data{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid #243549}
+.fs-data span{font-size:10px;color:#9db4c5;letter-spacing:.06em}
+.fs-data strong{font:700 13px ui-monospace,SFMono-Regular,monospace;color:#e9f5f9}
+.fs-disclaimer{margin-top:14px;border-top:1px solid #293c50;padding-top:12px;color:#8ca2b7;font-size:10px;line-height:1.55}
+@media(min-width:700px){.fs-grid{grid-template-columns:1fr 1fr}.fs-gauges{grid-template-columns:repeat(4,minmax(0,1fr))}.fs-viewport{height:360px}.fs-topline h1{font-size:32px}}
+@media(max-width:360px){.fs-topline h1{font-size:22px}.fs-status{font-size:8px}.fs-gauge strong{font-size:24px}.fs-viewport{height:195px}}
+@media(prefers-reduced-motion:reduce){.fs-world,.fs-bar-meter i{transition:none}}
