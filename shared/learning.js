@@ -48,6 +48,7 @@ if(extra){
 reader.append(el("h3","","Knowledge check"),el("p","",u[4]));const options=el("div","curriculum-options"),feedback=el("div","curriculum-feedback");feedback.hidden=true;let correct=false;
 u[5].forEach((answer,j)=>{const b=el("button","curriculum-option",String.fromCharCode(65+j)+". "+answer);b.onclick=()=>{correct=j===u[6];options.querySelectorAll("button").forEach(t=>t.classList.remove("selected"));b.classList.add("selected");feedback.hidden=false;feedback.textContent=(correct?"Correct. ":"Review the concept and try again. ")+u[7];done.disabled=!correct;};options.append(b)});
 reader.append(options,feedback);const done=el("button","curriculum-done",completed.includes(i)?"Completed ✓":"Complete lesson");done.disabled=!completed.includes(i);done.onclick=()=>{if(!completed.includes(i)){completed.push(i);try{localStorage.setItem(KEY,JSON.stringify(completed))}catch(_){feedback.textContent="Your answer was correct, but this browser did not allow local progress storage.";feedback.hidden=false;}update();}done.textContent="Completed ✓";done.disabled=true;renderProgress();};reader.append(done,el("p","curriculum-note","This is an introductory lesson, not professional qualification or substitute for supervised practical training."));reader.hidden=false;
+queueMicrotask(()=>window.academyCourseExtend?.(i));
 if(typeof reader.scrollIntoView==="function"){try{reader.scrollIntoView({block:"start",behavior:"auto"})}catch(_){reader.scrollIntoView()}}
 }catch(error){
  console.error("Academy lesson rendering failed",academy,i,error);
