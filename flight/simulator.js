@@ -1,92 +1,81 @@
 (()=>{"use strict";
+if(document.body.dataset.academy!=="flight")return;
 const page=document.querySelector("#app .body > .page:nth-of-type(3)");
-if(!page||document.body.dataset.academy!=="flight")return;
-page.classList.add("flight-simulator-page");
-page.replaceChildren();
+if(!page)return;
+page.classList.add("flight-simulator-page","landscape-trainer");
 page.innerHTML=`
-<div class="flight-console">
-  <div class="fs-topline"><button id="fs-exit" class="fs-exit" aria-label="Exit simulator">‹ Academy</button><div class="fs-topline-title"><span class="fs-kicker">FLIGHT TRAINING / SCENARIO 01</span><h1>Single-Engine Flight Trainer</h1></div><span class="fs-status" id="fs-state">READY</span></div>
-  <div class="fs-bar"><span>SCENARIO <b>STRAIGHT & LEVEL</b></span><span>TRAINING MODE <b>CONCEPT DEMO</b></span><button id="fs-brief" class="fs-mini">Briefing</button></div>
-  <div class="fs-viewport">
-    <div class="fs-world" id="fs-world"><div class="fs-sky"></div><div class="fs-ground"><div class="fs-runway"><div class="fs-centerline"></div></div></div><div class="fs-horizon"></div></div><div class="fs-windshield"><i></i><i></i></div><div class="fs-dash-shadow"></div>
-    <div class="fs-reticle"><span>┄┄</span>＋<span>┄┄</span></div><div class="fs-view-label">FORWARD VIEW · DEMONSTRATION</div>
-    <div class="fs-view-bottom"><span id="fs-view-text">Level attitude · moderate power</span><span id="fs-pause-state">READY</span></div>
-  </div>
-  <div class="fs-instrument-panel">
-    <div class="fs-instrument"><span class="fs-dial-title">AIRSPEED</span><div class="fs-dial fs-airspeed"><i id="fs-speed-needle" class="fs-needle"></i><b id="fs-speed">90</b><small>KTS</small></div></div>
-    <div class="fs-instrument"><span class="fs-dial-title">ATTITUDE</span><div class="fs-dial fs-attitude"><div id="fs-attitude-scene" class="fs-attitude-scene"><div class="fs-attitude-sky"></div><div class="fs-attitude-ground"></div></div><div class="fs-attitude-wings">━ ◆ ━</div></div></div>
-    <div class="fs-instrument"><span class="fs-dial-title">ALTITUDE</span><div class="fs-dial fs-altitude"><i id="fs-alt-needle" class="fs-needle"></i><b id="fs-alt">2,500</b><small>FT</small></div></div>
-    <div class="fs-instrument"><span class="fs-dial-title">HEADING</span><div class="fs-dial fs-heading"><div id="fs-compass" class="fs-compass-ring">N · E · S · W</div><b id="fs-heading">270°</b><small>HDG</small></div></div>
-  </div>
-  <div class="fs-secondary-readouts"><span>VERTICAL SPEED <b id="fs-vs">0</b> FT/MIN</span><span>THROTTLE <b id="fs-quick-throttle">55</b>%</span><span>FLAPS <b id="fs-quick-flaps">0</b>°</span></div>
-  <div class="fs-primary-actions"><button id="fs-start" class="fs-action-primary">Start Simulation</button><button id="fs-reset">Reset</button></div>
-  <div class="fs-grid">
-    <section class="fs-panel"><header><b>FLIGHT CONTROLS</b><small>LIVE INPUT</small></header>
-      <div class="fs-control"><label for="fs-throttle">Throttle <output id="fs-throttle-n">55%</output></label><input id="fs-throttle" type="range" min="0" max="100" value="55"></div>
-      <div class="fs-control"><label for="fs-pitch">Pitch <output id="fs-pitch-n">0°</output></label><input id="fs-pitch" type="range" min="-12" max="12" value="0"></div>
-      <div class="fs-control"><label for="fs-bank">Bank angle <output id="fs-bank-n">0°</output></label><input id="fs-bank" type="range" min="-35" max="35" value="0"></div>
-      <div class="fs-control"><label for="fs-flaps">Flaps <output id="fs-flaps-n">0°</output></label><input id="fs-flaps" type="range" min="0" max="30" step="10" value="0"></div>
-      <div class="fs-control"><label for="fs-trim">Elevator trim <output id="fs-trim-n">0%</output></label><input id="fs-trim" type="range" min="-20" max="20" value="0"></div>
-      
-    </section>
-    <section class="fs-panel fs-training-panel"><header><b>TRAINING GUIDANCE</b><small>OBJECTIVE 01</small></header>
-      <div class="fs-objective">Maintain a stable, nearly level flight attitude for 15 simulated seconds.</div>
-      <p class="fs-guidance" id="fs-guidance" aria-live="polite">Use the controls to explore how a conceptual trainer responds. Start the scenario when ready.</p>
-      <div class="fs-data"><span>ELAPSED SIM TIME</span><strong id="fs-time">00:00</strong></div>
-      <div class="fs-data"><span>OBJECTIVE HOLD</span><strong id="fs-hold">0 / 15 s</strong></div>
-      <div class="fs-data"><span>LESSON STATUS</span><strong id="fs-objective-status">NOT STARTED</strong></div>
-      <div class="fs-disclaimer">Educational prototype only. Simplified instrument values are illustrative, not validated aircraft dynamics or flight instruction.</div>
-    </section>
-  </div>
+<div class="ls-shell">
+ <header class="ls-header"><button type="button" id="ls-exit" class="ls-secondary">‹ Academy</button><div><strong>FLIGHT ACADEMY</strong><small>SIMULATION LAB · SINGLE ENGINE TRAINER</small></div><button type="button" id="ls-brief" class="ls-secondary">Briefing</button></header>
+ <div id="ls-rotate" class="ls-rotate"><span class="ls-rotate-icon">⟳</span><b>Turn your iPhone sideways</b><p>Landscape view is designed for the full pilot's-seat cockpit. You can still use this preview in portrait.</p><button type="button" id="ls-dismiss" class="ls-secondary">Use portrait anyway</button></div>
+ <div class="ls-cockpit">
+  <section class="ls-visual" aria-label="Simulated forward cockpit view">
+    <div id="ls-world" class="ls-world"><div class="ls-sky"></div><div class="ls-mountains"></div><div class="ls-terrain"><div class="ls-runway"><div></div></div></div></div>
+    <div class="ls-window-frame"></div>
+    <div class="ls-training"><span>TRAINING MISSION · 01</span><strong>Hold straight & level</strong><p>Keep pitch near 0°, bank near 0° and indicated speed between 70–120 kt.</p></div>
+    <div class="ls-viewstatus"><span id="ls-flight-status">READY</span><span id="ls-clock">00:00</span></div>
+  </section>
+  <section class="ls-panel" aria-label="Aircraft instrument panel">
+    <div class="ls-instruments">
+     <div class="ls-dial-wrap"><label>AIRSPEED</label><div class="ls-dial"><i id="ls-speed-needle" class="ls-needle"></i><strong id="ls-speed">90</strong><small>KTS</small></div></div>
+     <div class="ls-dial-wrap"><label>ATTITUDE</label><div class="ls-dial ls-attitude"><div id="ls-attitude-scene" class="ls-attitude-scene"><div class="ls-blue"></div><div class="ls-brown"></div></div><span class="ls-wings">━ ◆ ━</span></div></div>
+     <div class="ls-dial-wrap"><label>ALTITUDE</label><div class="ls-dial"><i id="ls-alt-needle" class="ls-needle"></i><strong id="ls-alt">2500</strong><small>FT</small></div></div>
+     <div class="ls-dial-wrap"><label>HEADING</label><div class="ls-dial ls-hdg"><div id="ls-compass" class="ls-compass">N &nbsp; E &nbsp; S &nbsp; W</div><strong id="ls-heading">270°</strong><small>HDG</small></div></div>
+     <div class="ls-dial-wrap"><label>V/SPEED</label><div class="ls-dial"><i id="ls-vs-needle" class="ls-needle"></i><strong id="ls-vs">0</strong><small>FPM</small></div></div>
+    </div>
+    <div class="ls-controls">
+      <div class="ls-yoke-panel"><div class="ls-control-title">TOUCH YOKE</div><div class="ls-yoke" id="ls-yoke" role="group" aria-label="Touch yoke: drag up or down for pitch, left or right for bank"><div class="ls-yoke-cross"></div><div id="ls-yoke-knob" class="ls-yoke-knob"><span>✛</span></div></div><div class="ls-control-value">PITCH <b id="ls-pitch">0°</b> · BANK <b id="ls-bank">0°</b></div><button class="ls-mini" id="ls-center">Center yoke</button></div>
+      <div class="ls-throttle-panel"><div class="ls-control-title">THROTTLE</div><div class="ls-throttle" id="ls-throttle" role="slider" tabindex="0" aria-label="Throttle percentage" aria-valuemin="0" aria-valuemax="100" aria-valuenow="55" aria-valuetext="55 percent"><div class="ls-throttle-track"></div><div class="ls-throttle-markers"><span>100</span><span>75</span><span>50</span><span>25</span><span>IDLE</span></div><div id="ls-throttle-handle" class="ls-throttle-handle"></div></div><b class="ls-control-value"><span id="ls-throttle-text">55</span>%</b></div>
+      <div class="ls-switches"><div class="ls-control-title">FLAPS</div><div id="ls-flap-options" class="ls-flaps"><button data-flaps="0" class="active">0°</button><button data-flaps="10">10°</button><button data-flaps="20">20°</button><button data-flaps="30">30°</button></div><div class="ls-control-title ls-trim-title">TRIM</div><div class="ls-trim"><button id="ls-trim-up" aria-label="Increase trim">▲</button><b id="ls-trim">0</b><button id="ls-trim-down" aria-label="Decrease trim">▼</button></div></div>
+    </div>
+   </section>
+  <div class="ls-bottom"><span id="ls-guidance">Adjust controls, then start the training scenario.</span><span id="ls-hold">0 / 15 s stable</span><button id="ls-start" class="ls-primary">Start</button><button id="ls-reset" class="ls-secondary">Reset</button></div>
+ </div>
+ <p class="ls-disclaimer">Concept demonstration only. Illustrative physics and visuals are not certified or suitable for real flight training.</p>
 </div>`;
-const $=id=>page.querySelector("#"+id);
-const initial=()=>({throttle:55,pitch:0,bank:0,flaps:0,trim:0,speed:90,alt:2500,heading:270,vs:0,seconds:0,hold:0,running:false,complete:false});
-let s=initial(),timer=null;
-const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
-function readInputs(){for(const id of ["throttle","pitch","bank","flaps","trim"])s[id]=Number($("fs-"+id).value);}
-function render(){
-  for(const [id,suffix] of [["throttle","%"],["pitch","°"],["bank","°"],["flaps","°"],["trim","%"]])$("fs-"+id+"-n").textContent=s[id]+suffix;
-  $("fs-speed").textContent=Math.round(s.speed);
-  $("fs-alt").textContent=Math.round(s.alt).toLocaleString("en-US");
-  $("fs-heading").textContent=Math.round(s.heading)+"°";
-  $("fs-vs").textContent=Math.round(s.vs);
-  $("fs-speed-needle").style.transform="translateX(-50%) rotate("+(-120+clamp(s.speed/160,0,1)*240)+"deg)";
-  $("fs-alt-needle").style.transform="translateX(-50%) rotate("+((s.alt%1000)/1000*360-135)+"deg)";
-  $("fs-compass").style.transform="translate(-50%,-50%) rotate("+(-s.heading)+"deg)";
-  $("fs-attitude-scene").style.transform="translateY("+(s.pitch*1.5)+"px) rotate("+(-s.bank)+"deg) scale(1.7)";
-  $("fs-quick-throttle").textContent=s.throttle;
-  $("fs-quick-flaps").textContent=s.flaps;
-  $("fs-world").style.transform="translateY("+(s.pitch*2.4)+"px) rotate("+(-s.bank)+"deg) scale(1.45)";
-  $("fs-time").textContent=String(Math.floor(s.seconds/60)).padStart(2,"0")+":"+String(s.seconds%60).padStart(2,"0");
-  $("fs-hold").textContent=s.hold+" / 15 s";
-  $("fs-state").textContent=s.complete?"COMPLETE":s.running?"ACTIVE":s.seconds>0?"PAUSED":"READY";
-  $("fs-pause-state").textContent=s.running?"RUNNING":s.complete?"COMPLETED":"PAUSED";
-  $("fs-start").textContent=s.running?"Pause":s.seconds>0?"Resume":"Start Simulation";
-  $("fs-objective-status").textContent=s.complete?"COMPLETE":s.running?"IN PROGRESS":"NOT STARTED";
-  const stable=Math.abs(s.pitch)<=2&&Math.abs(s.bank)<=5&&s.speed>=70&&s.speed<=120;
-  $("fs-view-text").textContent=stable?"Stable attitude · monitor instruments":Math.abs(s.bank)>5?"Bank angle outside training target":Math.abs(s.pitch)>2?"Adjust pitch toward level":"Check indicated airspeed";
-  $("fs-guidance").textContent=s.complete?"Objective completed in the conceptual simulator. Reset to try again.":!s.running?"Review the flight instruments and press Start to begin.":stable?"Good. Maintain the current attitude and airspeed to accumulate objective time.":"Adjust pitch and bank toward zero; aim for an indicated speed of 70–120 knots.";
+const $=id=>page.querySelector("#"+id),clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const base=()=>({throttle:55,pitch:0,bank:0,flaps:0,trim:0,speed:90,alt:2500,heading:270,vs:0,seconds:0,hold:0,running:false,complete:false});
+let state=base(),timer=null,draggingYoke=false,draggingThrottle=false;
+function stop(){state.running=false;if(timer){clearInterval(timer);timer=null;}render();}
+function reset(){stop();state=base();render();}
+function updateYoke(e){const box=$("ls-yoke").getBoundingClientRect();const x=clamp((e.clientX-box.left)/box.width,0,1),y=clamp((e.clientY-box.top)/box.height,0,1);state.bank=Math.round((x-.5)*60);state.pitch=Math.round((.5-y)*20);render();}
+$("ls-yoke").addEventListener("pointerdown",e=>{draggingYoke=true;$("ls-yoke").setPointerCapture(e.pointerId);updateYoke(e);});
+$("ls-yoke").addEventListener("pointermove",e=>{if(draggingYoke)updateYoke(e);});
+function releaseYoke(){if(!draggingYoke)return;draggingYoke=false;state.bank=0;state.pitch=0;render();}
+$("ls-yoke").addEventListener("pointerup",releaseYoke);$("ls-yoke").addEventListener("pointercancel",releaseYoke);
+$("ls-center").addEventListener("click",()=>{state.bank=0;state.pitch=0;render();});
+function updateThrottle(e){const track=$("ls-throttle").getBoundingClientRect();const margin=17;state.throttle=Math.round(clamp((track.bottom-margin-e.clientY)/(track.height-2*margin),0,1)*100);render();}
+$("ls-throttle").addEventListener("pointerdown",e=>{draggingThrottle=true;$("ls-throttle").setPointerCapture(e.pointerId);updateThrottle(e);});
+$("ls-throttle").addEventListener("pointermove",e=>{if(draggingThrottle)updateThrottle(e);});
+$("ls-throttle").addEventListener("pointerup",()=>draggingThrottle=false);$("ls-throttle").addEventListener("pointercancel",()=>draggingThrottle=false);
+$("ls-throttle").addEventListener("keydown",e=>{const delta=e.key==="ArrowUp"||e.key==="ArrowRight"?5:e.key==="ArrowDown"||e.key==="ArrowLeft"?-5:0;if(delta){e.preventDefault();state.throttle=clamp(state.throttle+delta,0,100);render();}});
+$("ls-flap-options").addEventListener("click",e=>{const b=e.target.closest("button[data-flaps]");if(!b)return;state.flaps=Number(b.dataset.flaps);render();});
+$("ls-trim-up").addEventListener("click",()=>{state.trim=clamp(state.trim+2,-20,20);render();});
+$("ls-trim-down").addEventListener("click",()=>{state.trim=clamp(state.trim-2,-20,20);render();});
+$("ls-start").addEventListener("click",()=>{if(state.complete){reset();return;}if(state.running){stop();return;}state.running=true;timer=setInterval(tick,1000);render();});
+$("ls-reset").addEventListener("click",reset);
+$("ls-brief").addEventListener("click",()=>alert("Straight & level mission: maintain pitch within ±2 degrees, bank within ±5 degrees and indicated speed 70–120 knots for 15 consecutive simulated seconds. Controls are conceptual; this is not a certified flight simulation."));
+$("ls-exit").addEventListener("click",()=>{stop();const home=document.querySelector("#app .nav button");home?.click();});
+$("ls-dismiss").addEventListener("click",()=>{$("ls-rotate").classList.add("dismissed");});
+function tick(){if(!state.running)return;state.seconds++;const desired=clamp(90+(state.throttle-55)*.75-state.pitch*1.8-state.flaps*.5,35,155);state.speed+=(desired-state.speed)*.2;state.vs=clamp(state.pitch*85+state.trim*.5-state.flaps*2,-1200,1200);state.alt=clamp(state.alt+state.vs/60,0,8000);state.heading=(state.heading+state.bank*.2+360)%360;const good=Math.abs(state.pitch)<=2&&Math.abs(state.bank)<=5&&state.speed>=70&&state.speed<=120;state.hold=good?state.hold+1:0;if(state.hold>=15){state.complete=true;state.running=false;clearInterval(timer);timer=null;}render();}
+function render(){const s=state;
+ $("ls-speed").textContent=Math.round(s.speed);$("ls-alt").textContent=Math.round(s.alt).toLocaleString("en-US");$("ls-heading").textContent=Math.round(s.heading)+"°";$("ls-vs").textContent=Math.round(s.vs);
+ $("ls-pitch").textContent=s.pitch+"°";$("ls-bank").textContent=s.bank+"°";$("ls-trim").textContent=s.trim;$("ls-throttle-text").textContent=s.throttle;
+ $("ls-throttle").setAttribute("aria-valuenow",String(s.throttle));$("ls-throttle").setAttribute("aria-valuetext",s.throttle+" percent");
+ $("ls-yoke-knob").style.left=(50+s.bank/30*37)+"%";$("ls-yoke-knob").style.top=(50-s.pitch/10*37)+"%";$("ls-throttle-handle").style.bottom="calc("+s.throttle+"% * .68 + 11%)";
+ $("ls-world").style.transform="translateY("+(s.pitch*2.3)+"px) rotate("+(-s.bank)+"deg) scale(1.4)";
+ $("ls-attitude-scene").style.transform="translateY("+(s.pitch*1.5)+"px) rotate("+(-s.bank)+"deg) scale(1.7)";
+ $("ls-speed-needle").style.transform="translateX(-50%) rotate("+(-115+clamp(s.speed/160,0,1)*230)+"deg)";
+ $("ls-alt-needle").style.transform="translateX(-50%) rotate("+((s.alt%1000)/1000*360-135)+"deg)";
+ $("ls-vs-needle").style.transform="translateX(-50%) rotate("+(clamp(s.vs/1200,-1,1)*105)+"deg)";
+ $("ls-compass").style.transform="translate(-50%,-50%) rotate("+(-s.heading)+"deg)";
+ for(const b of $("ls-flap-options").querySelectorAll("button")){b.classList.toggle("active",Number(b.dataset.flaps)===s.flaps);b.setAttribute("aria-pressed",String(Number(b.dataset.flaps)===s.flaps));}
+ $("ls-clock").textContent=String(Math.floor(s.seconds/60)).padStart(2,"0")+":"+String(s.seconds%60).padStart(2,"0");
+ $("ls-flight-status").textContent=s.complete?"OBJECTIVE COMPLETE":s.running?"SIM ACTIVE":s.seconds?"PAUSED":"READY";
+ $("ls-hold").textContent=s.hold+" / 15 s stable";$("ls-start").textContent=s.complete?"Try Again":s.running?"Pause":s.seconds?"Resume":"Start";
+ $("ls-guidance").textContent=s.complete?"Objective achieved — completed 15 seconds of stable flight.":!s.running?"Adjust controls, then start the training scenario.":Math.abs(s.pitch)>2||Math.abs(s.bank)>5?"Center pitch and bank to stabilize the aircraft.":s.speed<70||s.speed>120?"Adjust throttle to bring indicated airspeed into range.":"Maintain steady attitude and power.";
 }
-function step(){if(!s.running)return;readInputs();s.seconds++;
-  const targetSpeed=clamp(90+(s.throttle-55)*.75-s.pitch*1.8-s.flaps*.5,35,155);
-  s.speed+=(targetSpeed-s.speed)*.2;
-  s.vs=clamp(s.pitch*85+(s.trim*.5)-(s.flaps*2),-1200,1200);
-  s.alt=clamp(s.alt+s.vs/60,0,8000);
-  s.heading=(s.heading+s.bank*.2+360)%360;
-  const stable=Math.abs(s.pitch)<=2&&Math.abs(s.bank)<=5&&s.speed>=70&&s.speed<=120;
-  s.hold=stable?s.hold+1:0;
-  if(s.hold>=15){s.complete=true;s.running=false;clearInterval(timer);timer=null;}
-  render();
-}
-function stop(){s.running=false;if(timer){clearInterval(timer);timer=null;}render();}
-$("fs-start").addEventListener("click",()=>{if(s.complete)return;if(s.running){stop();return;}readInputs();s.running=true;timer=setInterval(step,1000);render();});
-$("fs-reset").addEventListener("click",()=>{stop();s=initial();for(const id of ["throttle","pitch","bank","flaps","trim"])$("fs-"+id).value=s[id];render();});
-for(const id of ["throttle","pitch","bank","flaps","trim"])$("fs-"+id).addEventListener("input",()=>{readInputs();render();});
-$("fs-brief").addEventListener("click",()=>{alert("MISSION BRIEFING — STRAIGHT AND LEVEL\\n\\nAdjust the conceptual throttle, pitch and bank controls. Hold pitch within ±2°, bank within ±5°, and indicated airspeed within 70–120 knots for 15 consecutive simulated seconds.\\n\\nThis is an educational demonstration, not a pilot certification or real-world flight model.");});
-const syncFocus=()=>{document.body.classList.toggle("flight-sim-focus",page.classList.contains("active"));if(!page.classList.contains("active")&&s.running)stop();};
-new MutationObserver(syncFocus).observe(page,{attributes:true,attributeFilter:["class"]});
-$("fs-exit").addEventListener("click",()=>{stop();const home=document.querySelector("#app .nav button");if(home)home.click();});
-document.addEventListener("visibilitychange",()=>{if(document.hidden&&s.running)stop();});
-syncFocus();
-render();
+const focus=()=>{const active=page.classList.contains("active");document.body.classList.toggle("flight-sim-focus",active);if(!active&&state.running)stop();};
+new MutationObserver(focus).observe(page,{attributes:true,attributeFilter:["class"]});
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&state.running)stop();});
+focus();render();
 })();
