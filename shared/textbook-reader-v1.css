@@ -9,3 +9,15 @@
 .curriculum-textbook-optional[open] summary{margin-bottom:12px}
 .curriculum-textbook-optional p{font-size:13px;line-height:1.75}
 @media(min-width:750px){.curriculum-textbook-section p{font-size:15px;line-height:1.9}}
+
+/* Connected chapter pathways and prose openings */
+.academy-textbook-pathway{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:24px 0 8px;padding:14px 15px;border:1px solid var(--edge);border-radius:10px}
+.academy-textbook-pathway strong{font-size:13px;font-weight:750;width:100%;letter-spacing:.02em}
+.academy-textbook-level-link{display:inline-flex;align-items:center;padding:6px 11px;border:1px solid var(--edge);border-radius:7px;color:var(--accent);text-decoration:none;font-size:12px;font-weight:700}
+.academy-textbook-level-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.academy-textbook-v1{scroll-margin-top:24px}
+.academy-textbook-opening{margin:18px 0 24px;padding:18px 18px 7px;border-left:3px solid var(--accent);background:rgba(18,37,55,.22)}
+.academy-textbook-synthesis{margin:20px 0 22px;padding:17px 18px;border:1px solid var(--edge);border-radius:10px}
+.academy-textbook-opening h3,.academy-textbook-synthesis h3{font-size:17px;line-height:1.35;margin:0 0 12px}
+.academy-textbook-opening p,.academy-textbook-synthesis p{font-size:14px;line-height:1.85;margin:0 0 13px}
+@media(min-width:750px){.academy-textbook-opening p,.academy-textbook-synthesis p{font-size:15px;line-height:1.9}}
