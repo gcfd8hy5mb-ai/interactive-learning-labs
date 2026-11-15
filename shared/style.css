@@ -53,3 +53,26 @@
 .control-panel,.stat{border-radius:9px;background:#101c2a}
 .choice{border-radius:6px}
 @media(min-width:700px){.hero{min-height:430px;padding:36px}.hero h1{max-width:650px}.hero p{max-width:570px}.tiles{grid-template-columns:repeat(3,1fr)}.tile{min-height:160px}.tile b{font-size:14px}.sim-art{margin:60px auto}.desktop-topnav button.active{border-radius:6px}}
+
+
+/* iPhone safe-area and image reliability refinements. */
+@media(max-width:699px){
+.app{padding-top:max(48px,env(safe-area-inset-top));}
+.top{height:70px;padding-inline:15px;}
+.hero{min-height:350px;}
+.nav{padding-bottom:max(12px,env(safe-area-inset-bottom));}
+}
+.hero:before{background-image:linear-gradient(180deg,rgba(4,10,17,.03) 0%,rgba(4,10,17,.15) 28%,rgba(4,10,17,.85) 63%,rgba(4,10,17,.99) 100%),var(--hero-photo,var(--photo));}
+.tile:before{background-image:linear-gradient(180deg,rgba(5,12,20,.16),rgba(5,12,20,.87)),var(--tile-photo,var(--photo2));opacity:.91;filter:saturate(.78);}
+.sim-stage{background-image:linear-gradient(180deg,rgba(9,16,25,.40),rgba(5,12,21,.94)),var(--sim-photo,var(--photo));}
+.tile .emoji{display:grid;place-items:center;width:29px;height:29px;background:rgba(4,11,20,.58);border:1px solid rgba(255,255,255,.20);border-radius:5px;color:#e3eaf3;z-index:1}
+.tile .emoji svg{display:block;width:21px;height:21px;stroke:currentColor;fill:none;}
+.brandmark svg,.round svg,.nav svg,.feature svg,.badge-icon svg,.sim-art svg{display:block;stroke:currentColor;fill:none;}
+.nav .ico{display:grid;place-items:center;min-width:22px;min-height:22px;}
+.nav .ico svg{min-width:19px;min-height:19px;}
+.app.flight .hero{background:linear-gradient(170deg,#152d45,#06101b);}
+.app.flight .tile{background:linear-gradient(155deg,#182d42,#091624);}
+.app.survival .hero{background:linear-gradient(170deg,#25382f,#07120e);}
+.app.survival .tile{background:linear-gradient(155deg,#1b3027,#0a1911);}
+.app.space .hero{background:linear-gradient(170deg,#1b2545,#0a1124);}
+.app.space .tile{background:linear-gradient(155deg,#1b243f,#0a1322);}
