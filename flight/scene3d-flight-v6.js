@@ -58,8 +58,8 @@ let plane=start(),controls={throttle:0,pitch:0,bank:0,trim:0,flaps:0},running=fa
 function setControls(next){for(const k of Object.keys(controls))if(Number.isFinite(Number(next[k])))controls[k]=Number(next[k]);}
 function reset(){plane=start();running=false;setControls({throttle:0,pitch:0,bank:0,trim:0,flaps:0});paint();}
 function landingPractice(){
- plane={...start(),x:0,z:-820,y:85,speed:35,vy:-1.1,airborne:true,phase:"Final approach",scenario:"landing"};
- running=false;setControls({throttle:38,pitch:0,bank:0,trim:0,flaps:10});paint();
+ plane={...start(),x:0,z:-820,y:32,speed:34,vy:-1.6,airborne:true,phase:"Final approach",scenario:"landing"};
+ running=false;setControls({throttle:38,pitch:-2,bank:0,trim:0,flaps:10});paint();
 }
 function snapshot(){return {speed:plane.speed*1.943844,alt:plane.y*3.28084,vs:plane.vy*196.8504,heading:(180+plane.yaw*180/Math.PI+360)%360,airborne:plane.airborne,landed:plane.landed,offRunway:plane.offRunway,phase:plane.phase,x:plane.x,z:plane.z,elapsed:plane.elapsed,landingRating:plane.landingRating,scenario:plane.scenario};}
 function advance(dt){
