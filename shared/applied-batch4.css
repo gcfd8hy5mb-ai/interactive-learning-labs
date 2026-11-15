@@ -1,0 +1,7 @@
+/* Batch 4: advanced applied course chapters */
+.academy-applied-batch4{border-top:1px solid var(--edge);padding-top:16px;margin-top:30px}
+.academy-applied-batch4>p{font-size:13px;line-height:1.7;color:#c7d6e0}
+.academy-applied-batch4 .curriculum-sublesson{padding:13px;border-radius:9px}
+.academy-applied-batch4 summary{cursor:pointer;padding:10px 2px;font-size:15px;font-weight:750;line-height:1.4;color:#edf3f8}
+.academy-applied-batch4 .curriculum-sublesson[open] summary{border-bottom:1px solid var(--edge);margin-bottom:9px}
+.academy-applied-batch4 .curriculum-draft{font-size:13px;line-height:1.65;min-height:150px}

@@ -1,0 +1,203 @@
+/* Flight Academy cockpit simulator — iPhone-first technical interface */
+.flight-simulator-page{color:#eaf2f7}.flight-simulator-page .flight-console{max-width:1040px;margin:0 auto}
+.fs-topline{display:flex;align-items:start;justify-content:space-between;gap:9px;margin:2px 0 15px}
+.fs-topline h1{font-size:25px;letter-spacing:-.04em;margin:6px 0}
+.fs-topline p{font-size:11px;color:#a8bacb;line-height:1.4;margin:0}
+.fs-kicker{font-size:9px;color:#8ec9e2;font-weight:800;letter-spacing:.14em}
+.fs-status{color:#8ec9e2;flex-shrink:0;font-size:9px;font-weight:800;border:1px solid rgba(114,175,204,.3);border-radius:4px;padding:7px;margin-top:5px}
+.fs-bar{display:flex;align-items:center;justify-content:space-between;gap:7px;flex-wrap:wrap;background:#0b1723;border:1px solid rgba(123,153,179,.22);padding:9px 10px;border-radius:6px;margin-bottom:10px}
+.fs-bar span{display:flex;flex-direction:column;color:#8196a9;font-size:8px;gap:3px;letter-spacing:.07em}
+.fs-bar b{font-size:10px;color:#e9f3fa;letter-spacing:0}
+.fs-mini{background:#17283a;color:#d4e7f2;border:1px solid #34475b;border-radius:4px;padding:9px 12px;font-weight:650;font-size:11px}
+.fs-viewport{height:225px;position:relative;overflow:hidden;border-radius:8px;border:1px solid #3b546b;background:linear-gradient(#3c6981 0%,#91b5c3 52%,#54624d 53%,#273b2d 100%);box-shadow:inset 0 0 40px #081421}
+.fs-world{position:absolute;inset:-40%;transform-origin:50% 50%;transition:transform .2s ease-out;will-change:transform}
+.fs-sky{position:absolute;inset:0 0 48%;background:linear-gradient(#315f7f,#a0b9c3)}
+.fs-ground{position:absolute;inset:52% 0 0;background:linear-gradient(#747762,#465b47 45%,#263e32)}
+.fs-horizon{position:absolute;top:52%;left:0;right:0;height:2px;background:#f5d7a9}
+.fs-reticle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font:30px ui-monospace,SFMono-Regular,monospace;color:#ffe2a1;text-shadow:0 0 3px #000}
+.fs-view-label{position:absolute;top:10px;left:10px;color:#f1f8fb;background:rgba(4,15,25,.72);padding:7px 8px;font-size:9px;font-weight:750;letter-spacing:.1em;border-radius:3px}
+.fs-view-bottom{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;gap:10px;padding:12px;background:linear-gradient(transparent,rgba(4,12,18,.88));font-size:10px}
+.fs-view-bottom span:last-child{color:#d7b46b;font-weight:800}
+.fs-gauges{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}
+.fs-gauge{background:linear-gradient(140deg,#12263a,#0a1724);padding:12px 11px;border:1px solid #33475b;border-radius:7px;min-width:0}
+.fs-gauge>span{font-size:9px;font-weight:800;letter-spacing:.1em;color:#a6b8c6}
+.fs-gauge strong{display:block;font:700 28px ui-monospace,SFMono-Regular,Consolas,monospace;color:#eef9fc;margin:5px 0 2px;letter-spacing:-.04em}
+.fs-gauge small{font-size:8px;letter-spacing:.09em;color:#98b0c4}
+.fs-bar-meter{height:3px;background:#29394a;margin-top:10px;overflow:hidden}
+.fs-bar-meter i{height:100%;width:0;display:block;background:#79c6ec;transition:width .2s}
+.fs-grid{display:grid;gap:10px}
+.fs-panel{border:1px solid #354759;background:#0c1826;border-radius:8px;padding:14px}
+.fs-panel header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #273748;padding-bottom:11px;margin-bottom:14px;gap:9px}
+.fs-panel header b{font-size:12px;letter-spacing:.09em}
+.fs-panel header small{font-size:9px;color:#80b8d6}
+.fs-control{margin-bottom:17px}
+.fs-control label{display:flex;justify-content:space-between;color:#d4e2ee;font-size:12px;font-weight:600;margin-bottom:7px}
+.fs-control output{font-family:ui-monospace,monospace;font-size:12px;color:#8bd4f1}
+.fs-control input{display:block;accent-color:#8ccce8;width:100%;margin:0;height:20px}
+.fs-actions{display:flex;gap:9px}
+.fs-actions button{border:1px solid #3b5267;border-radius:5px;color:#e9f0f7;background:#1a2a3d;font-size:11px;font-weight:800;padding:12px 9px;flex:1}
+.fs-actions button.fs-action-primary{background:#d4a75f;border-color:#d4a75f;color:#101823;flex:2}
+.fs-objective{padding:13px;border-left:3px solid #c4a161;background:#142435;color:#e9f2f8;font-size:13px;line-height:1.45}
+.fs-guidance{font-size:12px;line-height:1.55;color:#b8cbd9;min-height:58px}
+.fs-data{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid #243549}
+.fs-data span{font-size:10px;color:#9db4c5;letter-spacing:.06em}
+.fs-data strong{font:700 13px ui-monospace,SFMono-Regular,monospace;color:#e9f5f9}
+.fs-disclaimer{margin-top:14px;border-top:1px solid #293c50;padding-top:12px;color:#8ca2b7;font-size:10px;line-height:1.55}
+@media(min-width:700px){.fs-grid{grid-template-columns:1fr 1fr}.fs-gauges{grid-template-columns:repeat(4,minmax(0,1fr))}.fs-viewport{height:360px}.fs-topline h1{font-size:32px}}
+@media(max-width:360px){.fs-topline h1{font-size:22px}.fs-status{font-size:8px}.fs-gauge strong{font-size:24px}.fs-viewport{height:195px}}
+@media(prefers-reduced-motion:reduce){.fs-world,.fs-bar-meter i{transition:none}}
+
+
+/* Flight Simulator v2 — full-focus cockpit presentation */
+body.flight-sim-focus #app .top,body.flight-sim-focus #app .nav{display:none!important}
+body.flight-sim-focus #app .app{padding-bottom:0}
+body.flight-sim-focus #app .body{padding:10px 10px max(20px,env(safe-area-inset-bottom))}
+body.flight-sim-focus .flight-simulator-page{display:block}
+.flight-simulator-page .fs-topline{align-items:center;margin-bottom:10px;gap:8px}
+.flight-simulator-page .fs-topline-title{flex:1;min-width:0}
+.flight-simulator-page .fs-topline h1{font-size:16px;margin:3px 0;line-height:1.2}
+.flight-simulator-page .fs-kicker{font-size:8px;letter-spacing:.09em}
+.flight-simulator-page .fs-status{font-size:9px;padding:6px 8px;color:#9ed6b0;border-color:#597c70}
+.fs-exit{color:#d1dfec;background:#142538;border:1px solid #3b5468;border-radius:6px;padding:11px 9px;font-size:11px;white-space:nowrap}
+.flight-simulator-page .fs-bar{margin-bottom:8px;padding:7px}
+.flight-simulator-page .fs-viewport{height:clamp(185px,34dvh,340px);background:#567489;border-radius:5px}
+.flight-simulator-page .fs-world{inset:-55%;transform-origin:center center}
+.flight-simulator-page .fs-sky{background:linear-gradient(180deg,#32668e,#6799b2 55%,#c4c9c0);inset:0 0 50%}
+.flight-simulator-page .fs-ground{top:50%;background:linear-gradient(180deg,#7b9274 0%,#435b3f 25%,#283b32 70%,#1e3028 100%)}
+.flight-simulator-page .fs-horizon{top:50%}
+.fs-runway{position:absolute;top:0;left:calc(50% - 140px);width:280px;height:100%;background:linear-gradient(90deg,transparent 0 15%,#c9cdd0 15.3% 16%,#555d61 16.4% 83.6%,#d5d9dd 84% 84.7%,transparent 85%);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%);filter:brightness(.78)}
+.fs-centerline{position:absolute;left:calc(50% - 3px);width:6px;height:100%;background:repeating-linear-gradient(180deg,#d7dad7 0 13px,transparent 13px 36px);opacity:.8}
+.fs-windshield{position:absolute;inset:0;pointer-events:none;border:16px solid transparent;border-bottom-width:0;box-shadow:inset 0 0 42px rgba(1,9,15,.8)}
+.fs-windshield:before,.fs-windshield:after{content:"";position:absolute;top:-20%;bottom:-30%;width:7px;background:linear-gradient(90deg,#0a1017,#29333c,#0d141c);box-shadow:0 0 10px #071321}
+.fs-windshield:before{left:7%;transform:rotate(-11deg)}.fs-windshield:after{right:7%;transform:rotate(11deg)}
+.fs-dash-shadow{position:absolute;left:-8%;right:-8%;bottom:-31px;height:69px;background:linear-gradient(180deg,#1a2530,#050a0e);border-radius:50% 50% 0 0;box-shadow:0 -12px 20px rgba(4,9,12,.5);pointer-events:none}
+.flight-simulator-page .fs-reticle{font-size:20px;display:flex;gap:5px;align-items:center;color:#ffe3a1;text-shadow:0 1px 4px #000}
+.fs-reticle span{font-size:11px}
+.flight-simulator-page .fs-view-bottom{padding:10px;z-index:2}
+.fs-instrument-panel{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;padding:8px 6px;margin-top:7px;background:linear-gradient(150deg,#26313b,#0a1118);border:1px solid #485662;border-radius:8px;box-shadow:inset 0 3px 8px #050a11}
+.fs-instrument{min-width:0;text-align:center}
+.fs-dial-title{display:block;color:#b5c4d0;font-size:8px;letter-spacing:.07em;margin-bottom:5px;font-weight:750}
+.fs-dial{height:auto;aspect-ratio:1;max-width:130px;margin:auto;position:relative;border-radius:50%;border:3px solid #04080c;outline:1px solid #65717b;box-shadow:inset 0 0 10px #000,0 2px 4px #05080b;overflow:hidden;background:radial-gradient(circle at center,#1e2933 2%,#070d13 78%)}
+.fs-dial:after{content:"";position:absolute;inset:7px;border:1px dashed rgba(233,240,246,.30);border-radius:50%;pointer-events:none}
+.fs-dial b{position:absolute;left:0;right:0;top:42%;font:700 clamp(12px,3.4vw,23px) ui-monospace,SFMono-Regular,monospace;color:#f2f7f9;text-shadow:0 2px 3px #000;z-index:4}
+.fs-dial small{position:absolute;left:0;right:0;bottom:17%;font:700 8px ui-monospace,monospace;color:#b2c3cf;z-index:4}
+.fs-needle{position:absolute;left:50%;top:11%;width:2px;height:40%;transform-origin:50% 94%;background:linear-gradient(#f5f5ee,#c6c4b3);z-index:3}
+.fs-airspeed{background:conic-gradient(from 210deg,#285a8b 0 42deg,#3a7e5a 42deg 145deg,#d3b74a 145deg 210deg,#222a34 210deg)}
+.fs-altitude{background:radial-gradient(circle,#1a2836,#0a111c)}
+.fs-attitude{background:#203747}
+.fs-attitude-scene{position:absolute;inset:-65%;transform-origin:center center;transition:transform .18s ease}
+.fs-attitude-sky{position:absolute;inset:0 0 50%;background:linear-gradient(#3c76a8,#80b3cd)}
+.fs-attitude-ground{position:absolute;inset:50% 0 0;background:linear-gradient(#8f624a,#553d32);border-top:2px solid #fff}
+.fs-attitude-wings{position:absolute;z-index:5;top:43%;left:0;right:0;white-space:nowrap;color:#fff2b4;font-size:11px}
+.fs-heading{background:radial-gradient(circle,#25313e 0,#0a1018 70%)}
+.fs-compass-ring{position:absolute;left:50%;top:50%;width:85%;aspect-ratio:1;display:grid;place-items:start center;border:2px dotted #c7d1da;border-radius:50%;font-size:7px;color:#cddbe5;padding-top:4px}
+.fs-secondary-readouts{display:flex;justify-content:space-between;gap:6px;padding:8px 7px;background:#101f2e;border:1px solid #36485a;border-radius:5px;font-size:9px;color:#aebfcb}
+.fs-secondary-readouts b{font:700 11px ui-monospace,monospace;color:#edf7fa}
+.fs-primary-actions{display:flex;gap:8px;margin:10px 0}
+.fs-primary-actions button{background:#16293a;color:#e9f5fb;border:1px solid #436078;border-radius:6px;font-size:12px;font-weight:800;min-height:42px;padding:10px 14px;flex:1}
+.fs-primary-actions .fs-action-primary{background:#d5ab66;color:#151b21;border-color:#d5ab66;flex:2}
+.flight-simulator-page .fs-grid{gap:8px}
+.flight-simulator-page .fs-panel{padding:11px}
+.flight-simulator-page .fs-panel header{padding-bottom:8px;margin-bottom:9px}
+.flight-simulator-page .fs-control{margin-bottom:9px}
+.flight-simulator-page .fs-control label{font-size:11px;margin-bottom:3px}
+.flight-simulator-page .fs-control input{height:25px;touch-action:pan-y}
+.flight-simulator-page .fs-control output{font-size:11px}
+.flight-simulator-page .fs-objective{font-size:11px;padding:9px}
+.flight-simulator-page .fs-guidance{min-height:0;font-size:11px}
+@media(min-width:720px){.fs-instrument-panel{max-width:720px;margin:10px auto}.flight-simulator-page .fs-viewport{height:390px}.flight-simulator-page .fs-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:380px){.fs-dial-title{font-size:7px}.fs-secondary-readouts{font-size:8px}.flight-simulator-page .fs-viewport{height:195px}}
+
+/* Landscape cockpit v3 */
+body.flight-sim-focus #app .top,body.flight-sim-focus #app .nav{display:none!important}
+body.flight-sim-focus #app .app{padding:0;background:#070d15}
+body.flight-sim-focus #app .body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+body.flight-sim-focus{background:#070d15}
+.landscape-trainer{color:#edf2f7}
+.ls-shell{max-width:1200px;margin:auto;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.ls-header{height:52px;display:flex;align-items:center;gap:9px;padding:6px 9px;background:#070e17;border-bottom:1px solid #293744}
+.ls-header>div{flex:1;min-width:0}.ls-header strong{display:block;font-size:12px;letter-spacing:.08em}.ls-header small{display:block;color:#c9a361;font-size:8px;letter-spacing:.1em;margin-top:3px}
+.ls-secondary{color:#c7d8e5;background:#152434;border:1px solid #435469;border-radius:6px;padding:9px;font-weight:650;font-size:11px}
+.ls-cockpit{background:linear-gradient(#27323e,#10171f);border:1px solid #364454;border-top:0}
+.ls-visual{position:relative;height:clamp(200px,36dvh,360px);overflow:hidden;background:#5a8198}
+.ls-world{position:absolute;inset:-55%;transform-origin:center;will-change:transform;transition:transform .15s}
+.ls-sky{position:absolute;inset:0 0 50%;background:linear-gradient(#44779c,#8eb3cb 85%,#d8dbd2)}
+.ls-mountains{position:absolute;top:44%;height:10%;width:100%;background:#566b6e;clip-path:polygon(0 95%,8% 20%,17% 85%,25% 10%,37% 96%,47% 24%,57% 88%,67% 4%,77% 93%,87% 30%,100% 94%)}
+.ls-terrain{position:absolute;inset:50% 0 0;background:linear-gradient(#728a70,#334c3b 48%,#1c352e)}
+.ls-runway{position:absolute;top:0;left:calc(50% - 190px);width:380px;height:100%;background:#555b5f;clip-path:polygon(46% 0,54% 0,100% 100%,0 100%);box-shadow:inset 0 0 30px #222}
+.ls-runway>div{position:absolute;left:49%;width:2%;height:100%;background:repeating-linear-gradient(#e6e6df 0 14px,transparent 14px 29px)}
+.ls-window-frame{position:absolute;inset:0;border:13px solid rgba(13,20,29,.55);border-bottom:0;box-shadow:inset 0 0 65px #060f19;pointer-events:none}
+.ls-window-frame:before,.ls-window-frame:after{position:absolute;content:"";top:-18%;height:145%;width:8px;background:linear-gradient(90deg,#060b10,#4e5b65,#101a24)}
+.ls-window-frame:before{left:5%;transform:rotate(-10deg)}.ls-window-frame:after{right:5%;transform:rotate(10deg)}
+.ls-training{position:absolute;top:10px;left:13px;max-width:min(48%,270px);background:rgba(6,16,29,.83);border:1px solid #536171;border-radius:6px;padding:10px}
+.ls-training span{display:block;color:#e8be73;font-size:9px;font-weight:850;letter-spacing:.08em}
+.ls-training strong{font-size:15px;display:block;margin:4px 0}.ls-training p{margin:0;font-size:10px;color:#e0e8f1;line-height:1.4}
+.ls-viewstatus{position:absolute;bottom:10px;right:12px;display:flex;gap:6px;font:700 10px ui-monospace,monospace}
+.ls-viewstatus span{padding:7px;background:rgba(5,15,25,.84);border:1px solid #43566d;border-radius:4px}
+.ls-panel{padding:8px;background:linear-gradient(165deg,#313942,#121922);border-top:10px solid #090d12;box-shadow:inset 0 5px 11px #020509}
+.ls-instruments{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;max-width:770px;margin:0 auto}
+.ls-dial-wrap{text-align:center;min-width:0}.ls-dial-wrap label{display:block;font-size:8px;font-weight:800;color:#c9d1dc;margin:0 0 4px;letter-spacing:.07em}
+.ls-dial{position:relative;width:100%;max-width:128px;aspect-ratio:1;margin:auto;background:radial-gradient(circle,#25323e,#05080c 76%);border:3px solid #0a0e12;outline:1px solid #76838c;border-radius:50%;box-shadow:inset 0 0 12px #000}
+.ls-dial:before{position:absolute;content:"";inset:8%;border:1px dashed #667988;border-radius:50%}
+.ls-dial strong{position:absolute;left:0;right:0;top:42%;font:750 clamp(11px,2.6vw,24px) ui-monospace,monospace;color:#fff;text-shadow:0 1px 4px #000;z-index:3}
+.ls-dial small{position:absolute;left:0;right:0;bottom:14%;font-size:8px;color:#aab9c8;z-index:3}
+.ls-needle{position:absolute;left:50%;top:10%;width:2px;height:42%;background:#eee9d8;transform-origin:50% 95%;z-index:2}
+.ls-attitude{overflow:hidden}.ls-attitude-scene{position:absolute;inset:-60%;transform-origin:center;transition:transform .15s}.ls-blue{height:50%;background:linear-gradient(#3776a5,#78b4d8)}.ls-brown{height:50%;background:linear-gradient(#916347,#573b2f);border-top:2px solid #fff}
+.ls-wings{position:absolute;top:43%;left:0;right:0;color:#f9e4aa;white-space:nowrap;font-size:12px;z-index:3}
+.ls-hdg{overflow:hidden}.ls-compass{position:absolute;left:50%;top:50%;height:78%;width:78%;border:2px dotted #dce8f2;border-radius:50%;font-size:8px;padding-top:6px;white-space:nowrap}
+.ls-controls{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(90px,.72fr) minmax(92px,.7fr);gap:8px;margin-top:9px;max-width:700px;margin-inline:auto}
+.ls-control-title{font-size:9px;letter-spacing:.1em;color:#d8c5a8;text-align:center;font-weight:850;margin-bottom:5px}
+.ls-yoke-panel,.ls-throttle-panel,.ls-switches{background:linear-gradient(#151f2b,#0a121a);border:1px solid #45505a;border-radius:6px;padding:7px;min-width:0;text-align:center}
+.ls-yoke{touch-action:none;position:relative;height:104px;max-width:220px;border:1px solid #334e63;border-radius:10px;background:radial-gradient(ellipse,#25374a,#101b29);margin:auto}
+.ls-yoke-cross{position:absolute;top:50%;left:0;right:0;border-top:1px dashed #728697}.ls-yoke-cross:after{content:"";position:absolute;left:50%;top:-52px;height:104px;border-left:1px dashed #728697}
+.ls-yoke-knob{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;width:42px;height:42px;background:linear-gradient(#515c66,#151b23);border:3px solid #95a3ad;display:grid;place-items:center;box-shadow:0 4px 8px #000;pointer-events:none}
+.ls-yoke-knob span{font-size:22px;color:#e6eaec}
+.ls-control-value{display:block;font-size:10px;margin:6px 0;color:#c8d5de}
+.ls-mini{border:1px solid #445b6c;background:#1b2d3d;color:#e0edf5;border-radius:4px;font-size:9px;padding:5px 7px}
+.ls-throttle{height:110px;position:relative;touch-action:none;border-radius:5px;border:1px solid #314351;background:#0b1118;max-width:100px;margin:auto;cursor:ns-resize}
+.ls-throttle-track{position:absolute;top:11%;bottom:11%;left:46%;width:9px;background:#02080d;border-radius:4px;box-shadow:inset 0 0 3px #fff}
+.ls-throttle-markers{position:absolute;inset:6px auto 6px 5px;display:flex;flex-direction:column;justify-content:space-between;font-size:8px;color:#bdc9d4}
+.ls-throttle-handle{position:absolute;left:35%;width:43%;height:19px;bottom:48%;border-radius:5px;background:linear-gradient(#ec6b60,#8b2222);border:2px solid #ef9992;box-shadow:0 3px 5px #000;pointer-events:none}
+.ls-flaps{display:grid;grid-template-columns:repeat(2,1fr);gap:4px}
+.ls-flaps button,.ls-trim button{min-height:31px;border-radius:4px;background:#273341;border:1px solid #55616f;color:#eaf2f8;font-weight:700;font-size:11px}
+.ls-flaps button.active{background:#bd965a;color:#10151b;border-color:#f5c77b}
+.ls-trim-title{margin-top:7px}.ls-trim{display:flex;justify-content:center;align-items:center;gap:7px}.ls-trim b{font:700 11px ui-monospace,monospace;min-width:19px}.ls-trim button{min-width:30px}
+.ls-bottom{display:flex;gap:7px;align-items:center;background:#0b131d;padding:8px;border-top:1px solid #41515e}
+.ls-bottom>span{font-size:10px;color:#b6c9d7;flex:1}.ls-bottom>span:nth-child(2){flex:0 0 auto;color:#d8b67b;font-weight:700}
+.ls-bottom button{border-radius:5px;min-height:36px;padding:7px 12px;white-space:nowrap}
+.ls-primary{background:#d9af6c;border:1px solid #d9af6c;color:#111923;font-weight:850}
+.ls-disclaimer{text-align:center;color:#889eae;font-size:9px;margin:9px}
+.ls-rotate{display:none}
+@media(orientation:portrait) and (max-width:700px){
+.ls-rotate:not(.dismissed){display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;background:#17283c;border:1px solid #445b71;margin:8px;border-radius:8px;padding:14px}
+.ls-rotate-icon{font-size:28px;color:#dcb76d}.ls-rotate p{font-size:11px;max-width:320px;margin:0;color:#b8c8d5}
+.ls-instruments{gap:3px}.ls-dial{border-width:2px}.ls-dial-wrap label{font-size:7px}
+.ls-controls{grid-template-columns:1.15fr .75fr .75fr;gap:5px}
+.ls-training{max-width:60%}.ls-training p{font-size:9px}
+.ls-visual{height:270px}.ls-bottom{flex-wrap:wrap}
+.ls-bottom>span:first-child{flex-basis:100%}
+}
+@media(orientation:landscape) and (max-height:530px){
+.ls-header{height:38px}.ls-header small{display:none}
+.ls-visual{height:32dvh;min-height:115px;max-height:190px}
+.ls-instruments{max-width:580px;gap:6px}.ls-dial{max-width:80px}.ls-dial-wrap label{font-size:7px}
+.ls-controls{max-width:570px;margin-top:5px}.ls-yoke{height:63px}.ls-yoke-cross:after{height:63px;top:-32px}.ls-yoke-knob{width:32px;height:32px}
+.ls-throttle{height:75px}.ls-flaps button{min-height:23px}.ls-trim button{min-height:24px}
+.ls-bottom{padding:5px}.ls-bottom button{min-height:28px}.ls-control-value{margin:2px}
+.ls-training{padding:6px}.ls-training p{display:none}
+}
+@media(prefers-reduced-motion:reduce){.ls-world,.ls-attitude-scene{transition:none}}
+
+
+/* 3D runway world integration, prototype v4 */
+.ls-world.ls-3d-host{inset:0!important;transform:none!important;transition:none;overflow:hidden}
+.ls-world.ls-3d-host canvas{width:100%;height:100%;display:block;touch-action:none;outline:none}
+.ls-visual:has(.ls-3d-host){background:#6587a0}
+.ls-visual:has(.ls-3d-host) .ls-window-frame{pointer-events:none}
+.ls-viewstatus{z-index:2}
+.ls-training{z-index:2;backdrop-filter:blur(3px)}
+.ls-bottom button:disabled{opacity:.48;cursor:not-allowed}
+@media (orientation:landscape) and (max-height:530px){
+.ls-visual:has(.ls-3d-host){height:clamp(135px,39dvh,215px)}
+.ls-training{max-width:260px}
+}
