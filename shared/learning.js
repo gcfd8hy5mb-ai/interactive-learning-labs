@@ -8,10 +8,16 @@ const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className
 library.replaceChildren();
 library.append(el("h1","page-title",academy==="survival"?"Survival & Preparedness Training":academy==="flight"?"Aviation Learning Library":"Space Mission Academy"),el("p","sub","Six foundational modules. Read the lesson, explore the example, then check your understanding. Your lesson completion is saved on this device."));
 const summary=el("div","curriculum-summary"),counter=el("strong","",completed.length+" / "+units.length+" lessons completed"),bar=el("div","curriculum-progress"),fill=el("i");bar.append(fill);summary.append(counter,bar);library.append(summary);
-const list=el("div","curriculum-list");library.append(list);const reader=el("article","curriculum-reader");reader.hidden=true;library.append(reader);
+const list=el("div","curriculum-list");const reader=el("article","curriculum-reader");reader.hidden=true;library.append(reader,list);
 let active=0;
 function update(){counter.textContent=completed.length+" / "+units.length+" lessons completed";fill.style.width=completed.length/units.length*100+"%";list.querySelectorAll("button").forEach((b,i)=>{b.querySelector(".curriculum-state").textContent=completed.includes(i)?"Completed":"Open lesson";b.classList.toggle("complete",completed.includes(i))});const home=app.querySelector(".progress-card .meterbox");if(home){const pct=Math.round(completed.length/units.length*100);const val=home.querySelector(".line b");if(val)val.textContent=pct+"%";const meter=home.querySelector(".meter i");if(meter)meter.style.width=pct+"%";}}
-function openLesson(i){active=i;const u=units[i];list.hidden=true;reader.hidden=false;reader.replaceChildren();try{const back=el("button","curriculum-back","← All lessons");back.onclick=()=>{reader.hidden=true;list.hidden=false;list.scrollIntoView({block:"start"});};reader.append(back,el("div","eyebrow","FOUNDATIONAL LESSON "+String(i+1).padStart(2,"0")),el("h2","",u[0]));
+function openLesson(i){
+ if(!Number.isInteger(i)||i<0||i>=units.length)return;
+ active=i;const u=units[i];
+ list.hidden=true;list.style.display="none";
+ reader.hidden=false;reader.style.display="block";
+ reader.replaceChildren();
+ try{const back=el("button","curriculum-back","← All lessons");back.onclick=()=>{reader.hidden=true;reader.style.display="none";list.hidden=false;list.style.display="grid";list.scrollIntoView({block:"start"});};reader.append(back,el("div","eyebrow","FOUNDATIONAL LESSON "+String(i+1).padStart(2,"0")),el("h2","",u[0]));
 for(const [heading,p] of [["Core concepts",u[1]],["How it works",u[2]],["Worked reasoning exercise",u[3]]]){reader.append(el("h3","",heading),el("p","",p));}
 const extra=window.academyDeepChapters?.[academy]?.[i];
 if(extra){
@@ -47,11 +53,12 @@ if(typeof reader.scrollIntoView==="function"){try{reader.scrollIntoView({block:"
  console.error("Academy lesson rendering failed",academy,i,error);
  reader.replaceChildren();
  const back=el("button","curriculum-back","← Back to courses");
- back.onclick=()=>{reader.hidden=true;list.hidden=false;};
+ back.onclick=()=>{reader.hidden=true;reader.style.display="none";list.hidden=false;list.style.display="grid";};
  reader.append(back,el("h2","","Lesson could not open"),el("p","","The lesson reader encountered an error. You can return to the course list without losing saved progress."),el("p","curriculum-feedback",String(error?.message||error)));
- reader.hidden=false;list.hidden=true;
+ reader.hidden=false;reader.style.display="block";list.hidden=true;list.style.display="none";
 }}
-units.forEach((u,i)=>{const b=el("button","curriculum-module");const order=el("span","curriculum-order",String(i+1).padStart(2,"0")),main=el("span","curriculum-module-text");main.append(el("strong","",u[0]),el("small","",academy==="flight"?"Aviation fundamentals":academy==="survival"?"Preparedness fundamentals":"Space science fundamentals"));const st=el("span","curriculum-state");b.append(order,main,st);b.onclick=()=>openLesson(i);list.append(b)});
+window.academyOpenLesson=openLesson;
+units.forEach((u,i)=>{const b=el("button","curriculum-module");b.type="button";b.dataset.lessonIndex=String(i);const order=el("span","curriculum-order",String(i+1).padStart(2,"0")),main=el("span","curriculum-module-text");main.append(el("strong","",u[0]),el("small","",academy==="flight"?"Aviation fundamentals":academy==="survival"?"Preparedness fundamentals":"Space science fundamentals"));const st=el("span","curriculum-state");b.append(order,main,st);b.addEventListener("click",()=>openLesson(i));list.append(b)});
 function renderProgress(){const existing=progressPage.querySelector("#learning-progress-register");if(existing)existing.remove();const panel=el("section","learning-register");panel.id="learning-progress-register";panel.append(el("h2","","Learning progress"),el("p","",completed.length+" of "+units.length+" foundational lessons completed on this device."));units.forEach((u,i)=>panel.append(el("div","learning-progress-row",(completed.includes(i)?"✓ ":"○ ")+u[0])));progressPage.append(panel);
 const oldExtra=progressPage.querySelector("#academy-chapter-practice");if(oldExtra)oldExtra.remove();
 let advanced=[];try{const a=JSON.parse(localStorage.getItem("academy-chapter-practice-v2-"+academy)||"[]");advanced=Array.isArray(a)?a:[]}catch(_){}
