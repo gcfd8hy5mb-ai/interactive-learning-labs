@@ -46,3 +46,64 @@
 @media(min-width:700px){.fs-grid{grid-template-columns:1fr 1fr}.fs-gauges{grid-template-columns:repeat(4,minmax(0,1fr))}.fs-viewport{height:360px}.fs-topline h1{font-size:32px}}
 @media(max-width:360px){.fs-topline h1{font-size:22px}.fs-status{font-size:8px}.fs-gauge strong{font-size:24px}.fs-viewport{height:195px}}
 @media(prefers-reduced-motion:reduce){.fs-world,.fs-bar-meter i{transition:none}}
+
+
+/* Flight Simulator v2 — full-focus cockpit presentation */
+body.flight-sim-focus #app .top,body.flight-sim-focus #app .nav{display:none!important}
+body.flight-sim-focus #app .app{padding-bottom:0}
+body.flight-sim-focus #app .body{padding:10px 10px max(20px,env(safe-area-inset-bottom))}
+body.flight-sim-focus .flight-simulator-page{display:block}
+.flight-simulator-page .fs-topline{align-items:center;margin-bottom:10px;gap:8px}
+.flight-simulator-page .fs-topline-title{flex:1;min-width:0}
+.flight-simulator-page .fs-topline h1{font-size:16px;margin:3px 0;line-height:1.2}
+.flight-simulator-page .fs-kicker{font-size:8px;letter-spacing:.09em}
+.flight-simulator-page .fs-status{font-size:9px;padding:6px 8px;color:#9ed6b0;border-color:#597c70}
+.fs-exit{color:#d1dfec;background:#142538;border:1px solid #3b5468;border-radius:6px;padding:11px 9px;font-size:11px;white-space:nowrap}
+.flight-simulator-page .fs-bar{margin-bottom:8px;padding:7px}
+.flight-simulator-page .fs-viewport{height:clamp(185px,34dvh,340px);background:#567489;border-radius:5px}
+.flight-simulator-page .fs-world{inset:-55%;transform-origin:center center}
+.flight-simulator-page .fs-sky{background:linear-gradient(180deg,#32668e,#6799b2 55%,#c4c9c0);inset:0 0 50%}
+.flight-simulator-page .fs-ground{top:50%;background:linear-gradient(180deg,#7b9274 0%,#435b3f 25%,#283b32 70%,#1e3028 100%)}
+.flight-simulator-page .fs-horizon{top:50%}
+.fs-runway{position:absolute;top:0;left:calc(50% - 140px);width:280px;height:100%;background:linear-gradient(90deg,transparent 0 15%,#c9cdd0 15.3% 16%,#555d61 16.4% 83.6%,#d5d9dd 84% 84.7%,transparent 85%);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%);filter:brightness(.78)}
+.fs-centerline{position:absolute;left:calc(50% - 3px);width:6px;height:100%;background:repeating-linear-gradient(180deg,#d7dad7 0 13px,transparent 13px 36px);opacity:.8}
+.fs-windshield{position:absolute;inset:0;pointer-events:none;border:16px solid transparent;border-bottom-width:0;box-shadow:inset 0 0 42px rgba(1,9,15,.8)}
+.fs-windshield:before,.fs-windshield:after{content:"";position:absolute;top:-20%;bottom:-30%;width:7px;background:linear-gradient(90deg,#0a1017,#29333c,#0d141c);box-shadow:0 0 10px #071321}
+.fs-windshield:before{left:7%;transform:rotate(-11deg)}.fs-windshield:after{right:7%;transform:rotate(11deg)}
+.fs-dash-shadow{position:absolute;left:-8%;right:-8%;bottom:-31px;height:69px;background:linear-gradient(180deg,#1a2530,#050a0e);border-radius:50% 50% 0 0;box-shadow:0 -12px 20px rgba(4,9,12,.5);pointer-events:none}
+.flight-simulator-page .fs-reticle{font-size:20px;display:flex;gap:5px;align-items:center;color:#ffe3a1;text-shadow:0 1px 4px #000}
+.fs-reticle span{font-size:11px}
+.flight-simulator-page .fs-view-bottom{padding:10px;z-index:2}
+.fs-instrument-panel{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;padding:8px 6px;margin-top:7px;background:linear-gradient(150deg,#26313b,#0a1118);border:1px solid #485662;border-radius:8px;box-shadow:inset 0 3px 8px #050a11}
+.fs-instrument{min-width:0;text-align:center}
+.fs-dial-title{display:block;color:#b5c4d0;font-size:8px;letter-spacing:.07em;margin-bottom:5px;font-weight:750}
+.fs-dial{height:auto;aspect-ratio:1;max-width:130px;margin:auto;position:relative;border-radius:50%;border:3px solid #04080c;outline:1px solid #65717b;box-shadow:inset 0 0 10px #000,0 2px 4px #05080b;overflow:hidden;background:radial-gradient(circle at center,#1e2933 2%,#070d13 78%)}
+.fs-dial:after{content:"";position:absolute;inset:7px;border:1px dashed rgba(233,240,246,.30);border-radius:50%;pointer-events:none}
+.fs-dial b{position:absolute;left:0;right:0;top:42%;font:700 clamp(12px,3.4vw,23px) ui-monospace,SFMono-Regular,monospace;color:#f2f7f9;text-shadow:0 2px 3px #000;z-index:4}
+.fs-dial small{position:absolute;left:0;right:0;bottom:17%;font:700 8px ui-monospace,monospace;color:#b2c3cf;z-index:4}
+.fs-needle{position:absolute;left:50%;top:11%;width:2px;height:40%;transform-origin:50% 94%;background:linear-gradient(#f5f5ee,#c6c4b3);z-index:3}
+.fs-airspeed{background:conic-gradient(from 210deg,#285a8b 0 42deg,#3a7e5a 42deg 145deg,#d3b74a 145deg 210deg,#222a34 210deg)}
+.fs-altitude{background:radial-gradient(circle,#1a2836,#0a111c)}
+.fs-attitude{background:#203747}
+.fs-attitude-scene{position:absolute;inset:-65%;transform-origin:center center;transition:transform .18s ease}
+.fs-attitude-sky{position:absolute;inset:0 0 50%;background:linear-gradient(#3c76a8,#80b3cd)}
+.fs-attitude-ground{position:absolute;inset:50% 0 0;background:linear-gradient(#8f624a,#553d32);border-top:2px solid #fff}
+.fs-attitude-wings{position:absolute;z-index:5;top:43%;left:0;right:0;white-space:nowrap;color:#fff2b4;font-size:11px}
+.fs-heading{background:radial-gradient(circle,#25313e 0,#0a1018 70%)}
+.fs-compass-ring{position:absolute;left:50%;top:50%;width:85%;aspect-ratio:1;display:grid;place-items:start center;border:2px dotted #c7d1da;border-radius:50%;font-size:7px;color:#cddbe5;padding-top:4px}
+.fs-secondary-readouts{display:flex;justify-content:space-between;gap:6px;padding:8px 7px;background:#101f2e;border:1px solid #36485a;border-radius:5px;font-size:9px;color:#aebfcb}
+.fs-secondary-readouts b{font:700 11px ui-monospace,monospace;color:#edf7fa}
+.fs-primary-actions{display:flex;gap:8px;margin:10px 0}
+.fs-primary-actions button{background:#16293a;color:#e9f5fb;border:1px solid #436078;border-radius:6px;font-size:12px;font-weight:800;min-height:42px;padding:10px 14px;flex:1}
+.fs-primary-actions .fs-action-primary{background:#d5ab66;color:#151b21;border-color:#d5ab66;flex:2}
+.flight-simulator-page .fs-grid{gap:8px}
+.flight-simulator-page .fs-panel{padding:11px}
+.flight-simulator-page .fs-panel header{padding-bottom:8px;margin-bottom:9px}
+.flight-simulator-page .fs-control{margin-bottom:9px}
+.flight-simulator-page .fs-control label{font-size:11px;margin-bottom:3px}
+.flight-simulator-page .fs-control input{height:25px;touch-action:pan-y}
+.flight-simulator-page .fs-control output{font-size:11px}
+.flight-simulator-page .fs-objective{font-size:11px;padding:9px}
+.flight-simulator-page .fs-guidance{min-height:0;font-size:11px}
+@media(min-width:720px){.fs-instrument-panel{max-width:720px;margin:10px auto}.flight-simulator-page .fs-viewport{height:390px}.flight-simulator-page .fs-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:380px){.fs-dial-title{font-size:7px}.fs-secondary-readouts{font-size:8px}.flight-simulator-page .fs-viewport{height:195px}}
