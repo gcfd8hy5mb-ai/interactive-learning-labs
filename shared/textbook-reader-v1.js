@@ -39,6 +39,18 @@ function attach(i){
    const synthesis=el("section","academy-textbook-synthesis");
    synthesis.append(el("h3","","Connecting the ideas"),el("p","",unit.synthesis));section.append(synthesis);
   }
+  if(Array.isArray(unit.references)&&unit.references.length){
+    const reading=el("section","academy-textbook-references");
+    reading.append(el("h3","","Further reading · authoritative references"));
+    const bibliography=el("ul","");
+    for(const item of unit.references){
+      if(!Array.isArray(item)||item.length!==2||!/^https:\/\//.test(item[1]))continue;
+      const li=el("li",""),link=el("a","",item[0]);
+      link.href=item[1];link.target="_blank";link.rel="noopener noreferrer";
+      li.append(link);bibliography.append(li);
+    }
+    reading.append(bibliography);section.append(reading);
+  }
   const worked=el("section","curriculum-textbook-section");
   worked.append(el("h3","","Worked example and interpretation"),el("p","",unit.worked));section.append(worked);
   if(unit.optionalPrompt){
