@@ -35,3 +35,13 @@
 ## Change control
 
 Branch only; no production merge. Existing six categories, grades, saved progress and simulators are not intentionally changed.
+
+## Subsequent audit update — source coverage and curriculum consistency (2026-11-17)
+
+- **54 of 54 textbook units** (18 per academy, six per level) now have at least one linked authoritative background reference; the dataset contains 15 distinct reference URLs.
+- The final ten unreferenced units received ten additional context-specific instructional sections, not merely a generic link.
+- Script syntax, section triplets, optional question structure and link-field syntax pass programmatic checks.
+- No exact duplicate section bodies remain across each academy dataset.
+- The HTML asset references for all three academies were increased to textbook data version 20; the existing Questions tab and simulator/specialist script references remain in place.
+
+**Important limits:** Source linkage is not the same as claim-by-claim source verification. Some references cover broad foundational concepts, not every statement or worked example in a chapter. Every chapter still needs claim-level evidence checking, professional review of safety-sensitive passages, instructional quality review, and live browser/device acceptance tests before academic sign-off. Production `main` was not changed by these development commits.
