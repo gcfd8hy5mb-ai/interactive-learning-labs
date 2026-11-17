@@ -1,0 +1,20 @@
+.survival-planning-worksheet{margin:18px 0 24px;padding:15px 16px;border:1px solid rgba(196,167,104,.34);border-radius:14px;background:rgba(20,38,28,.5);color:inherit}
+.survival-planning-worksheet summary{font-weight:700;cursor:pointer;line-height:1.45;color:#e7d2a3}
+.survival-worksheet-intro{font-size:.87rem;line-height:1.6;opacity:.85;margin:12px 0 16px}
+.survival-worksheet-form{display:grid;gap:13px;margin-top:12px}
+.survival-worksheet-field{display:grid;gap:6px;font-size:.88rem;line-height:1.5}
+.survival-worksheet-field span{font-weight:600}
+.survival-worksheet-field input,.survival-worksheet-field textarea{width:100%;box-sizing:border-box;min-height:42px;padding:10px 12px;border-radius:9px;border:1px solid rgba(207,207,207,.32);background:rgba(5,16,12,.55);color:inherit;font:inherit}
+.survival-worksheet-field textarea{min-height:74px;resize:vertical}
+.survival-worksheet-field input:focus-visible,.survival-worksheet-field textarea:focus-visible{outline:2px solid #d7b877;outline-offset:1px}
+.survival-worksheet-checks{display:grid;gap:10px;margin:3px 0 0;padding:12px;border-radius:10px;border:1px solid rgba(207,207,207,.25)}
+.survival-worksheet-checks legend{font-weight:650;font-size:.88rem;padding:0 7px}
+.survival-worksheet-checks label{display:flex;gap:9px;align-items:flex-start;font-size:.85rem;line-height:1.5}
+.survival-worksheet-checks input{margin-top:3px;accent-color:#d7b877}
+.survival-worksheet-output{font-size:.9rem;font-weight:600;line-height:1.6;color:#e4d4b0}
+.survival-worksheet-output:empty{display:none}
+.survival-worksheet-status{font-size:.78rem;opacity:.8;min-height:1em;margin:0}
+.survival-worksheet-actions{display:flex;flex-wrap:wrap;gap:9px}
+.survival-worksheet-actions button{padding:10px 13px;border:1px solid rgba(215,184,119,.42);border-radius:10px;background:rgba(215,184,119,.13);color:inherit;cursor:pointer;font:inherit;font-size:.85rem}
+.survival-worksheet-actions button:focus-visible{outline:2px solid #d7b877}
+@media(max-width:540px){.survival-planning-worksheet{padding:13px}.survival-worksheet-actions button{flex:1}}
