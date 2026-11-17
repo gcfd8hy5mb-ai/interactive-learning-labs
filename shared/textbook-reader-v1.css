@@ -21,3 +21,10 @@
 .academy-textbook-opening h3,.academy-textbook-synthesis h3{font-size:17px;line-height:1.35;margin:0 0 12px}
 .academy-textbook-opening p,.academy-textbook-synthesis p{font-size:14px;line-height:1.85;margin:0 0 13px}
 @media(min-width:750px){.academy-textbook-opening p,.academy-textbook-synthesis p{font-size:15px;line-height:1.9}}
+
+/* Source links stay with reading content, not with assessments */
+.academy-textbook-references{margin:19px 0 25px;padding:14px 17px;border:1px solid var(--edge);border-radius:10px}
+.academy-textbook-references h3{font-size:14px;margin:0 0 9px}
+.academy-textbook-references ul{margin:0;padding-left:20px}
+.academy-textbook-references li{margin:7px 0;font-size:13px;line-height:1.65}
+.academy-textbook-references a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
