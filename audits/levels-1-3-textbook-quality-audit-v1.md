@@ -66,3 +66,24 @@ This section documents a **targeted review**, not an audit of every assertion in
 **Reviewed sources:** [CDC drinking water advisories](https://www.cdc.gov/water-emergency/about/drinking-water-advisories-an-overview.html), [CDC personal needs](https://www.cdc.gov/prepare-your-health/take-action/personal-needs.html), [FAA Pilot's Handbook](https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak), [USGS topographic maps](https://www.usgs.gov/programs/national-geospatial-program/topographic-maps), [NASA systems engineering handbook](https://www.nasa.gov/reference/systems-engineering-handbook/), [NASA Gravity and Mechanics](https://science.nasa.gov/learn/basics-of-space-flight/chapter3-3/), and [Physics LibreTexts vis-viva equation](https://phys.libretexts.org/Courses/Prince_Georges_Community_College/General_Physics_I%3A_Classical_Mechanics/57%3A__Celestial_Mechanics/57.10%3A_The_Vis_Viva_Equation).
 
 **Limitations:** This does not verify every calculation, external URL, regulation, safety instruction, or scientific statement. Publication quality, source relevance and accessible formatting require additional subject-matter review. No iPhone or live-browser acceptance test was performed.
+
+
+## Targeted assumption and source audit — continuation (2026-11-17)
+
+This is a second **bounded review**, not completion of the full academic accuracy audit. Four instructional sections were revised to distinguish their measured quantities, modeling assumptions and real-world limitations.
+
+| Course / section | Mathematical or evidence check | Revision / result |
+|---|---|---|
+| Survival L2 / Error propagation across legs | For **travel distance** 1,000 m, lateral error at 5° is 1,000 sin(5°)=87.16 m. If 1,000 m is instead forward **projected distance**, lateral error is 1,000 tan(5°)=87.49 m. | Explicitly distinguished the two geometric assumptions. Both figures are rounded and exclude mapping, bearing and terrain uncertainties. |
+| Flight L1 / A model of lift and its limits | ½ × 1.2 × 40² × 16 × 0.5 = 7,680 N; at 30 m/s the result is 4,320 N under fixed inputs, a 56.25% ratio. | Explicitly distinguished air-relative speed from groundspeed, and stated that CL is artificially held constant. Background authority: FAA Pilot's Handbook. |
+| Space L1 / A bottleneck that changes the entire mission | 4 **megabits**/s for 480 s = 1,920 megabits = 240 decimal **megabytes**; 300 MB produced minus 240 MB maximum = 60 MB minimum remaining. | Documented decimal prefixes, theoretical uninterrupted throughput, protocol overhead and scientific data-quality constraints. The numerical case is fictional. |
+| Space L1 / Dynamic pressure is not monotonic | ½ × 0.6 × 250² = 18,750 Pa; ½ × 0.3 × 300² = 13,500 Pa. | Retained the numerical result and clarified it is a simplified model, not a vehicle structural-load certificate. |
+
+### External source spot checks
+
+- [CDC Drinking Water Advisories](https://www.cdc.gov/water-emergency/about/drinking-water-advisories-an-overview.html): current page explicitly distinguishes boil-water, do-not-drink and do-not-use notices; the preceding water-advisory wording is consistent with this classification.
+- [FAA Pilot's Handbook of Aeronautical Knowledge](https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak): official handbook landing page is accessible as background for flight forces and performance terminology.
+- [NASA Basics of Space Flight — Gravity and Mechanics](https://science.nasa.gov/learn/basics-of-space-flight/chapter3-3/): official NASA resource is accessible for foundational gravity and mechanics.
+- [NASA Systems Engineering Handbook](https://www.nasa.gov/reference/systems-engineering-handbook/): official handbook page is accessible as a systems-engineering reference.
+
+**Audit interpretation:** URL accessibility and source-topic relevance are not claim-by-claim proof. These four changes address model clarity and mathematical reasoning; the full 54-unit textbook still requires comprehensive reference-level review, expert subject review, and running-browser / mobile acceptance tests. No independent academic sign-off is claimed.
