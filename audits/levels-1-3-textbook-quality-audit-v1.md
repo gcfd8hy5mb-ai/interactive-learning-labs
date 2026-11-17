@@ -45,3 +45,24 @@ Branch only; no production merge. Existing six categories, grades, saved progres
 - The HTML asset references for all three academies were increased to textbook data version 20; the existing Questions tab and simulator/specialist script references remain in place.
 
 **Important limits:** Source linkage is not the same as claim-by-claim source verification. Some references cover broad foundational concepts, not every statement or worked example in a chapter. Every chapter still needs claim-level evidence checking, professional review of safety-sensitive passages, instructional quality review, and live browser/device acceptance tests before academic sign-off. Production `main` was not changed by these development commits.
+
+
+## Claim-level review sample — 2026-11-17
+
+This section documents a **targeted review**, not an audit of every assertion in the 54 units. Each record distinguishes a directly supported principle, an independently checked example calculation, and a conclusion still needing expert validation.
+
+| Academy / textbook location | Reviewed claim | Evidence and result | Disposition |
+|---|---|---|---|
+| Survival L1 / Food, water and sanitation | Boil-water, do-not-drink and do-not-use advisories mean different things | CDC Drinking Water Advisories overview lists all three categories and distinguishes contact risks | **Reworded** to specify the distinctions and connected-appliance caution |
+| Survival L1 / Medical continuity | Individual prescriptions, assistive devices and supplies belong in emergency planning | CDC Personal Needs enumerates these dependencies | **Supported as background**; individual clinical advice still necessary |
+| Survival L3 / Land navigation | 3° bearing error across 2 km ≈105 m lateral offset | Direct trigonometric check: 2,000 × sin(3°) = 104.7 m | **Arithmetic supported**; excludes datum and field errors |
+| Flight L3 / Aerodynamics | Speed reduction from 60 to 48 m/s gives 0.64 of speed-squared lift term if other inputs held fixed | (48/60)²=0.64; required coefficient multiplier 1/0.64=1.5625 | **Arithmetic supported**; FAA fundamentals supply context, not aircraft performance certification |
+| Flight L2 / Navigation | 60 NM legs at 90, 110, 80 knots take ≈1.97 h total | 60/90+60/110+60/80=1.9621 h, approximately 1.96 h; the prior prose saying 1.97 h is a rounding discrepancy | **Flagged for correction** |
+| Flight L3 / Landing | 1,800 m runway with touchdowns at 300 m and 1,050 m leaves 1,500 m and 750 m | Direct subtraction from the illustrative runway length | **Arithmetic supported**; does not validate stopping performance |
+| Space L1 / Mission architecture | A 4 Mb/s link for 12 min transmits at most 360 decimal MB before overhead | 4×720÷8=360 MB, explicitly assuming decimal units and uninterrupted nominal throughput | **Reworded** to distinguish example assumptions from NASA statements |
+| Space L2 / Orbital mechanics | For μ=400,000 km³/s², r=8,000 km, circular speed √50≈7.071 km/s; with a=10,000 km, vis-viva speed √60≈7.746 km/s | Algebra checked; NASA Gravity & Mechanics is conceptual background, Physics LibreTexts Vis Viva chapter covers the explicit formula | **Tightened equation-specific reference** |
+| Space / Systems engineering | Verification differs from validation | NASA Systems Engineering Handbook/appendix discusses separate verification and validation activities | **Supported as background**, not a source for fictional spacecraft numbers |
+
+**Reviewed sources:** [CDC drinking water advisories](https://www.cdc.gov/water-emergency/about/drinking-water-advisories-an-overview.html), [CDC personal needs](https://www.cdc.gov/prepare-your-health/take-action/personal-needs.html), [FAA Pilot's Handbook](https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak), [USGS topographic maps](https://www.usgs.gov/programs/national-geospatial-program/topographic-maps), [NASA systems engineering handbook](https://www.nasa.gov/reference/systems-engineering-handbook/), [NASA Gravity and Mechanics](https://science.nasa.gov/learn/basics-of-space-flight/chapter3-3/), and [Physics LibreTexts vis-viva equation](https://phys.libretexts.org/Courses/Prince_Georges_Community_College/General_Physics_I%3A_Classical_Mechanics/57%3A__Celestial_Mechanics/57.10%3A_The_Vis_Viva_Equation).
+
+**Limitations:** This does not verify every calculation, external URL, regulation, safety instruction, or scientific statement. Publication quality, source relevance and accessible formatting require additional subject-matter review. No iPhone or live-browser acceptance test was performed.
